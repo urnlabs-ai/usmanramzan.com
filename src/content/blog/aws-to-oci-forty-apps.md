@@ -2,7 +2,7 @@
 title: "Migrating forty apps from AWS EKS to OCI OKE without downtime"
 description: "How we moved about forty applications and twenty databases from AWS EKS to OCI OKE across ten teams, and what the migration actually cost in planning."
 pubDate: 2026-07-14
-draft: true
+draft: false
 ---
 
 At Unifonic I led the migration of roughly forty applications and twenty databases from AWS EKS to Oracle Cloud's OKE. Ten teams owned those services. We finished with zero customer-facing downtime, and the platform ended up fifteen to twenty thousand dollars a month cheaper to run. This post is the shape of that project: why we did it, what we moved first, what broke, and what I would do differently.

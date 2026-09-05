@@ -2,7 +2,7 @@
 title: "What fractional CTO work actually looks like: four companies, four very different problems"
 description: "Four fractional CTO engagements: healthcare SOC 2 readiness, a travel-sector AI assistant, manufacturing GDPR remediation, and media operations on AWS EKS."
 pubDate: 2026-05-20
-draft: true
+draft: false
 ---
 
 Alongside my role as CTO at Eprecisio, I work as a fractional CTO for four companies. The title sounds vague, so this post is about what the work actually is: four companies, four completely different problems, and a pattern underneath them that keeps repeating.

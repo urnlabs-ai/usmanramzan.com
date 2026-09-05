@@ -21,7 +21,7 @@ for (const post of posts) {
   <section class="py-24 md:py-32">
     <div class="mx-auto max-w-6xl px-6">
       <h1 class="font-display text-5xl font-medium tracking-tight md:text-7xl">Writing</h1>
-      <p class="mt-6 max-w-2xl text-lg text-[#57534e]">
+      <p class="mt-6 max-w-2xl text-lg text-muted">
         Notes on cloud infrastructure, platform engineering, and running technology for
         companies that cannot afford downtime.
       </p>
@@ -43,7 +43,7 @@ for (const post of posts) {
                       {post.data.title}
                     </a>
                     <p class="mt-2 font-mono text-xs text-muted">{fmt(post.data.pubDate)}</p>
-                    <p class="mt-3 max-w-2xl text-[#57534e]">{post.data.description}</p>
+                    <p class="mt-3 max-w-2xl text-muted">{post.data.description}</p>
                   </li>
                 ))}
               </ul>

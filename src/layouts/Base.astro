@@ -40,7 +40,7 @@ const isActive = (href: string) =>
   <body id="top" class="bg-bg font-sans text-ink antialiased">
     <header class="border-b border-line">
       <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
-        <a href="/" class="text-[15px] font-semibold transition-opacity hover:opacity-70">Usman Ramzan</a>
+        <a href="/" class="text-sm font-semibold transition-opacity hover:opacity-70">Usman Ramzan</a>
         <nav class="hidden items-center gap-8 text-sm md:flex">
           {
             nav.map((item) => (
@@ -56,12 +56,32 @@ const isActive = (href: string) =>
             ))
           }
         </nav>
-        <a
-          href="mailto:usman.ramzan0505@gmail.com"
-          class="rounded-full border border-ink px-5 py-2 text-sm transition-colors hover:bg-ink hover:text-white"
-        >
-          Get in touch
-        </a>
+        <div class="flex items-center gap-4">
+          <details class="relative md:hidden">
+            <summary class="list-none cursor-pointer text-sm text-muted transition-colors hover:text-ink">Menu</summary>
+            <nav class="absolute right-0 top-full z-10 mt-3 min-w-40 border border-line bg-bg px-5 py-3 text-sm shadow-sm">
+              {
+                nav.map((item) => (
+                  <a
+                    href={item.href}
+                    class:list={[
+                      'py-2 block transition-colors hover:text-ink',
+                      isActive(item.href) ? 'text-ink' : 'text-muted',
+                    ]}
+                  >
+                    {item.label}
+                  </a>
+                ))
+              }
+            </nav>
+          </details>
+          <a
+            href="mailto:usman.ramzan0505@gmail.com"
+            class="rounded-full border border-ink px-5 py-2 text-sm transition-colors hover:bg-ink hover:text-white"
+          >
+            Get in touch
+          </a>
+        </div>
       </div>
     </header>
 
