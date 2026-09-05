@@ -1,6 +1,7 @@
 ---
 import '@fontsource-variable/geist';
 import '@fontsource-variable/geist-mono';
+import '@fontsource-variable/bricolage-grotesque/standard.css';
 import '../styles/global.css';
 
 interface Props {
@@ -40,7 +41,7 @@ const isActive = (href: string) =>
     <header class="border-b border-line">
       <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
         <a href="/" class="text-[15px] font-semibold transition-opacity hover:opacity-70">Usman Ramzan</a>
-        <nav class="hidden items-center gap-8 text-xs uppercase tracking-[0.18em] md:flex">
+        <nav class="hidden items-center gap-8 text-sm md:flex">
           {
             nav.map((item) => (
               <a
@@ -57,7 +58,7 @@ const isActive = (href: string) =>
         </nav>
         <a
           href="mailto:usman.ramzan0505@gmail.com"
-          class="rounded-full border border-ink px-5 py-2 text-xs uppercase tracking-[0.14em] transition-colors hover:bg-ink hover:text-white"
+          class="rounded-full border border-ink px-5 py-2 text-sm transition-colors hover:bg-ink hover:text-white"
         >
           Get in touch
         </a>
@@ -69,8 +70,19 @@ const isActive = (href: string) =>
     </main>
 
     <footer class="border-t border-line">
+      <div class="mx-auto max-w-6xl px-6 py-20">
+        <p class="font-display text-3xl font-medium tracking-tight md:text-5xl">
+          Working on something that cannot go down?
+          <a
+            href="mailto:usman.ramzan0505@gmail.com"
+            class="whitespace-nowrap underline decoration-accent underline-offset-8 transition-colors hover:text-accent"
+          >
+            Write to me.
+          </a>
+        </p>
+      </div>
       <div
-        class="mx-auto grid max-w-6xl grid-cols-2 gap-x-6 gap-y-8 px-6 py-12 text-sm md:grid-cols-4"
+        class="mx-auto grid max-w-6xl grid-cols-2 gap-x-6 gap-y-8 border-t border-line px-6 py-12 text-sm md:grid-cols-4"
       >
         <div>
           <p class="font-medium">Usman Ramzan</p>

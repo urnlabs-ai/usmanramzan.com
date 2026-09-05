@@ -7,6 +7,12 @@ const posts = (await getCollection('blog')).sort(
 );
 const fmt = (d: Date) =>
   d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+
+const groups = new Map<number, typeof posts>();
+for (const post of posts) {
+  const y = post.data.pubDate.getFullYear();
+  groups.set(y, [...(groups.get(y) ?? []), post]);
+}
 ---
 <Base
   title="Writing | Usman Ramzan"
@@ -14,27 +20,37 @@ const fmt = (d: Date) =>
 >
   <section class="py-24 md:py-32">
     <div class="mx-auto max-w-6xl px-6">
-      <h1 class="text-2xl font-light uppercase tracking-[0.08em] md:text-4xl">Writing</h1>
-      <p class="mt-4 max-w-2xl text-lg text-muted">
+      <h1 class="font-display text-5xl font-medium tracking-tight md:text-7xl">Writing</h1>
+      <p class="mt-6 max-w-2xl text-lg text-[#57534e]">
         Notes on cloud infrastructure, platform engineering, and running technology for
         companies that cannot afford downtime.
       </p>
-      <ul class="mt-12 border-t border-line">
+
+      <div class="mt-16 divide-y divide-line border-t border-line">
         {
-          posts.map((post) => (
-            <li class="border-b border-line py-8">
-              <p class="font-mono text-xs text-muted">{fmt(post.data.pubDate)}</p>
-              <a
-                href={`/writing/${post.id}/`}
-                class="mt-2 block text-xl font-medium underline-offset-4 hover:text-accent hover:underline"
-              >
-                {post.data.title}
-              </a>
-              <p class="mt-2 max-w-2xl text-muted">{post.data.description}</p>
-            </li>
+          [...groups].map(([year, list]) => (
+            <div class="grid grid-cols-1 gap-y-6 py-12 md:grid-cols-12 md:gap-x-8">
+              <div class="md:col-span-2">
+                <p class="font-mono text-sm text-muted md:sticky md:top-24">{year}</p>
+              </div>
+              <ul class="space-y-12 md:col-span-10">
+                {list.map((post) => (
+                  <li>
+                    <a
+                      href={`/writing/${post.id}/`}
+                      class="font-display text-2xl font-medium underline-offset-4 hover:text-accent hover:underline"
+                    >
+                      {post.data.title}
+                    </a>
+                    <p class="mt-2 font-mono text-xs text-muted">{fmt(post.data.pubDate)}</p>
+                    <p class="mt-3 max-w-2xl text-[#57534e]">{post.data.description}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
           ))
         }
-      </ul>
+      </div>
     </div>
   </section>
 </Base>
