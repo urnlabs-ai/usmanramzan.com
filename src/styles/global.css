@@ -1,0 +1,104 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono Variable", ui-monospace, SFMono-Regular, monospace;
+
+  --color-bg: #fafaf9;
+  --color-ink: #1c1c1a;
+  --color-muted: #57534e;
+  --color-line: #e7e5e4;
+  --color-accent: #059669;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-ink);
+}
+
+/* Long-form post styling, written by hand, no plugin. */
+.prose {
+  max-width: 65ch;
+}
+.prose p {
+  margin-top: 1.25em;
+  line-height: 1.75;
+}
+.prose > :first-child {
+  margin-top: 0;
+}
+.prose h2 {
+  margin-top: 2.5em;
+  font-size: 1.375rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.prose h3 {
+  margin-top: 2em;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+.prose ul,
+.prose ol {
+  margin-top: 1.25em;
+  padding-left: 1.25rem;
+  line-height: 1.75;
+}
+.prose ul {
+  list-style: disc;
+}
+.prose ol {
+  list-style: decimal;
+}
+.prose li {
+  margin-top: 0.5em;
+}
+.prose li::marker {
+  color: var(--color-accent);
+}
+.prose blockquote {
+  margin-top: 1.5em;
+  border-left: 2px solid var(--color-accent);
+  padding-left: 1rem;
+  color: var(--color-muted);
+  font-style: italic;
+}
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background-color: #f0efee;
+  padding: 0.15em 0.35em;
+  border-radius: 4px;
+}
+.prose pre {
+  margin-top: 1.5em;
+  background-color: #f0efee;
+  padding: 1rem;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+.prose pre code {
+  background: transparent;
+  padding: 0;
+}
+.prose a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.prose strong {
+  font-weight: 600;
+}
+.prose hr {
+  margin-top: 2.5em;
+  border-color: var(--color-line);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

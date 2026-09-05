@@ -1,0 +1,82 @@
+---
+import '@fontsource-variable/geist';
+import '@fontsource-variable/geist-mono';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const nav = [
+  { href: '/about', label: 'About' },
+  { href: '/experience', label: 'Experience' },
+  { href: '/writing', label: 'Writing' },
+];
+const isActive = (href: string) =>
+  href === '/' ? Astro.url.pathname === '/' : Astro.url.pathname.startsWith(href);
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL('/og.png', Astro.site)} />
+    <meta name="twitter:card" content="summary_large_image" />
+  </head>
+  <body class="bg-bg font-sans text-ink antialiased">
+    <header class="border-b border-line">
+      <div class="mx-auto flex h-16 max-w-5xl items-center justify-between px-6">
+        <a href="/" class="font-medium transition-opacity hover:opacity-70">Usman Ramzan</a>
+        <nav class="flex items-center gap-6 text-sm">
+          {
+            nav.map((item) => (
+              <a
+                href={item.href}
+                class:list={[
+                  'transition-opacity hover:opacity-70',
+                  isActive(item.href) ? 'text-ink font-medium' : 'text-muted',
+                ]}
+              >
+                {item.label}
+              </a>
+            ))
+          }
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="border-t border-line">
+      <div
+        class="mx-auto flex flex-col gap-2 px-6 py-8 text-sm text-muted md:flex-row md:items-center md:justify-between md:py-8"
+      >
+        <p>© 2026 Muhammad Usman Ramzan</p>
+        <p>
+          <a href="https://linkedin.com/in/usman-ramzan" class="transition-opacity hover:opacity-70">LinkedIn</a>
+          <span class="mx-2">·</span>
+          <a href="mailto:usman.ramzan0505@gmail.com" class="transition-opacity hover:opacity-70">usman.ramzan0505@gmail.com</a>
+        </p>
+      </div>
+    </footer>
+
+    <!-- TODO: add Cloudflare Web Analytics beacon with a real token once the site is live
+    <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "TODO_CF_BEACON_TOKEN"}'></script>
+    -->
+  </body>
+</html>

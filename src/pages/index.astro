@@ -1,0 +1,107 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+
+const posts = (await getCollection('blog'))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+
+const fmt = (d: Date) =>
+  d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+---
+<Base
+  title="Usman Ramzan, CTO and technical advisor"
+  description="Seven years running multi-cloud platforms for companies where downtime is not an option. CTO at Eprecisio, fractional CTO to four more."
+>
+  <section class="py-24 md:py-32">
+    <div class="mx-auto max-w-5xl px-6">
+      <h1 class="max-w-3xl text-4xl font-semibold tracking-tight md:text-5xl">
+        CTO and technical advisor. I make cloud infrastructure boring, in the good way.
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
+        Seven years running multi-cloud platforms for companies where downtime is not an option. Now
+        CTO at Eprecisio, fractional CTO to four more.
+      </p>
+      <p class="mt-10 flex flex-wrap gap-x-8 gap-y-3 text-sm font-medium">
+        <a href="/about" class="text-accent underline-offset-4 hover:underline">
+          Read about me <span aria-hidden="true">&rarr;</span>
+        </a>
+        <a href="/writing" class="text-accent underline-offset-4 hover:underline">
+          See my writing <span aria-hidden="true">&rarr;</span>
+        </a>
+      </p>
+    </div>
+  </section>
+
+  <section class="border-y border-line">
+    <div class="mx-auto grid max-w-5xl grid-cols-1 gap-10 px-6 py-14 md:grid-cols-12 md:gap-8">
+      <div class="md:col-span-4">
+        <p class="font-mono text-2xl tracking-tight">$15-20K/mo</p>
+        <p class="mt-2 text-sm text-muted">monthly cloud savings, Unifonic</p>
+      </div>
+      <div class="md:col-span-3">
+        <p class="font-mono text-2xl tracking-tight">10B+</p>
+        <p class="mt-2 text-sm text-muted">messages a year on the platform</p>
+      </div>
+      <div class="md:col-span-3">
+        <p class="font-mono text-2xl tracking-tight">~40 apps</p>
+        <p class="mt-2 text-sm text-muted">migrated zero downtime, AWS to OCI</p>
+      </div>
+      <div class="md:col-span-2">
+        <p class="font-mono text-2xl tracking-tight">12</p>
+        <p class="mt-2 text-sm text-muted">cloud providers in one platform, Eprecisio</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-24 md:py-32">
+    <div class="mx-auto max-w-5xl px-6">
+      <h2 class="text-2xl font-semibold tracking-tight">Selected work</h2>
+      <ul class="mt-8 border-t border-line">
+        <li class="flex flex-col gap-3 border-b border-line py-7 md:flex-row md:items-baseline md:justify-between md:gap-8">
+          <div>
+            <h3 class="font-medium">AWS to OCI migration</h3>
+            <p class="mt-1 text-muted">Forty applications and twenty databases moved from AWS EKS to OCI OKE across ten teams. Zero customer-facing downtime.</p>
+          </div>
+          <a href="/experience" class="shrink-0 text-sm text-accent underline-offset-4 hover:underline">How it went &rarr;</a>
+        </li>
+        <li class="flex flex-col gap-3 border-b border-line py-7 md:flex-row md:items-baseline md:justify-between md:gap-8">
+          <div>
+            <h3 class="font-medium">AI knowledge assistant</h3>
+            <p class="mt-1 text-muted">A RAG assistant on Azure OpenAI for a 1,300-person travel company, so staff could stop digging through documents for answers.</p>
+          </div>
+          <a href="/experience" class="shrink-0 text-sm text-accent underline-offset-4 hover:underline">How it went &rarr;</a>
+        </li>
+        <li class="flex flex-col gap-3 border-b border-line py-7 md:flex-row md:items-baseline md:justify-between md:gap-8">
+          <div>
+            <h3 class="font-medium">SOC 2 readiness</h3>
+            <p class="mt-1 text-muted">Took a healthcare SaaS from 22 open pentest findings to a clean report and audit-ready evidence.</p>
+          </div>
+          <a href="/experience" class="shrink-0 text-sm text-accent underline-offset-4 hover:underline">How it went &rarr;</a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="pb-28 md:pb-32">
+    <div class="mx-auto max-w-5xl px-6">
+      <div class="flex items-baseline justify-between gap-6">
+        <h2 class="text-2xl font-semibold tracking-tight">Recent writing</h2>
+        <a href="/writing" class="shrink-0 text-sm text-muted underline-offset-4 hover:underline hover:text-ink">All writing</a>
+      </div>
+      <ul class="mt-8 border-t border-line">
+        {
+          posts.map((post) => (
+            <li class="border-b border-line py-7">
+              <a href={`/writing/${post.id}/`} class="font-medium underline-offset-4 hover:text-accent hover:underline">
+                {post.data.title} <span aria-hidden="true">&rarr;</span>
+              </a>
+              <p class="mt-1 font-mono text-xs text-muted">{fmt(post.data.pubDate)}</p>
+              <p class="mt-2 text-muted">{post.data.description}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</Base>

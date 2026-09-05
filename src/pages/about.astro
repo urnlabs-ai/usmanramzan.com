@@ -1,0 +1,78 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base
+  title="About | Usman Ramzan"
+  description="Lahore-based CTO and technical advisor. Seven years across Emumba, Unifonic, and Eprecisio, building cloud platforms where downtime is not an option."
+>
+  <section class="py-24 md:py-32">
+    <div class="mx-auto grid max-w-5xl grid-cols-1 gap-12 px-6 md:grid-cols-12">
+      <div class="md:col-span-8">
+        <h1 class="text-4xl font-semibold tracking-tight">About</h1>
+        <div class="mt-8 space-y-6 text-lg leading-relaxed">
+          <p>
+            I'm Usman Ramzan. I live in Lahore, and for the last seven years I have worked on the
+            part of software that nobody notices until it breaks: the infrastructure underneath it.
+          </p>
+          <p>
+            The short version of my career. I started at Emumba in 2019 as a DevOps engineer and
+            founded their Cloud Center of Excellence, building HIPAA and PCI compliant architectures
+            on AWS and Azure. Then Unifonic, a messaging platform sending over ten billion messages a
+            year, where I spent three years, ran about three hundred Kubernetes nodes, and led the
+            migration of roughly forty applications from AWS to Oracle Cloud. Since September 2025 I
+            have been CTO at Eprecisio, where I own the technology strategy for an enterprise
+            multi-cloud Kubernetes platform.
+          </p>
+          <p>
+            People ask what a CTO actually does all day. At Eprecisio I pick what we build versus
+            buy, keep tenant provisioning fast (it went from eight to ten minutes to about fifty
+            seconds), and make sure the platform stays reliable as it grows across twelve cloud
+            providers. Alongside that I am fractional CTO to four companies, which mostly means
+            turning vague technical anxiety into a ranked list of problems with owners and dates.
+          </p>
+          <p>
+            The thread through all of it: I like infrastructure that is boring, reliable, and honest
+            about its costs. Downtime is the most expensive feature anyone can ship, and cost
+            surprises are downtime that has not happened yet. I care about compliance for the same
+            reason. SOC 2, HIPAA, and GDPR are not trophies; they are the checklist that lets a
+            company sell to customers who need proof.
+          </p>
+        </div>
+
+        <div class="mt-14">
+          <h2 class="text-lg font-semibold">Now</h2>
+          <ul class="mt-4 space-y-2 text-muted">
+            <li>CTO at Eprecisio Technologies</li>
+            <li>Fractional CTO to four companies</li>
+            <li>
+              Building <a href="https://urnlabs.com" class="text-accent underline-offset-4 hover:underline">URN Labs</a>
+            </li>
+            <li>Writing here occasionally</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="md:col-span-4">
+        <!-- TODO: add a real photo slot. Empty bordered 3:4 box until a portrait exists. -->
+        <div class="aspect-[3/4] w-full rounded border border-line"></div>
+        <div class="mt-10 border-t border-line pt-8">
+          <h2 class="text-lg font-semibold">Where I have been</h2>
+          <ul class="mt-4 space-y-3 text-sm">
+            <li>
+              <p class="font-medium">Eprecisio Technologies</p>
+              <p class="text-muted">CTO, Sep 2025 &rarr; present</p>
+            </li>
+            <li>
+              <p class="font-medium">Unifonic</p>
+              <p class="text-muted">Senior Infrastructure Engineer 2024-2025 &middot; DevOps Engineer 2022-2024</p>
+            </li>
+            <li>
+              <p class="font-medium">Emumba</p>
+              <p class="text-muted">DevOps Engineer 2019-2022</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

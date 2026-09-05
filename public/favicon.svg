@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="4" fill="#fafaf9"/>
+  <text x="30" y="40" font-family="ui-monospace, monospace" font-size="26" font-weight="600" fill="#1c1c1a" text-anchor="middle">UR</text>
+  <rect x="22" y="46" width="16" height="3" fill="#059669"/>
+</svg>
