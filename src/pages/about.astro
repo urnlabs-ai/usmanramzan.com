@@ -1,9 +1,25 @@
 ---
 import Base from '../layouts/Base.astro';
+import { personJsonLd, siteUrl } from '../data/person';
+
+const person = personJsonLd();
+const { '@context': _ctx, ...personEntity } = person;
+const profileJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfilePage',
+  name: 'About Usman Ramzan',
+  url: `${siteUrl}/about`,
+  mainEntity: {
+    ...personEntity,
+    '@id': `${siteUrl}/#person`,
+  },
+};
 ---
 <Base
   title="About | Usman Ramzan"
   description="Lahore-based CTO and technical advisor. Seven years across Emumba, Unifonic, and Eprecisio, building cloud platforms where downtime is not an option."
+  ogType="profile"
+  jsonLd={profileJsonLd}
 >
   <section class="py-24 md:py-32">
     <div class="mx-auto grid max-w-6xl grid-cols-1 gap-12 px-6 md:grid-cols-12">
@@ -49,12 +65,26 @@ import Base from '../layouts/Base.astro';
             </li>
             <li>Writing here occasionally</li>
           </ul>
+          <p class="mt-6 text-sm text-muted">
+            <a href="/faq" class="text-accent underline-offset-4 hover:underline">
+              FAQ: what a fractional CTO for Kubernetes platforms does &rarr;
+            </a>
+          </p>
         </div>
       </div>
 
       <div class="md:col-span-4">
-        <!-- TODO: add a real photo slot. Empty bordered 3:4 box until a portrait exists. -->
-        <div class="flex aspect-[3/4] w-full items-center justify-center border border-line bg-[#f4f4f2]" aria-hidden="true"><span class="font-mono text-5xl text-[#d4d4d0]">UR</span></div>
+        <div class="aspect-[3/4] w-full overflow-hidden border border-line bg-[#f4f4f2]">
+          <img
+            src="/usman-portrait.jpg"
+            alt="Usman Ramzan"
+            width="800"
+            height="1000"
+            class="h-full w-full object-cover object-top"
+            loading="eager"
+            decoding="async"
+          />
+        </div>
         <div class="mt-10 border-t border-line pt-8">
           <h2 class="text-lg font-medium">Where I have been</h2>
           <ul class="mt-4 space-y-3 text-sm">

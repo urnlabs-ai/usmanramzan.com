@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "og": "node scripts/make-og.mjs && node scripts/make-og.mjs --title \"Migrating forty apps from AWS EKS to OCI OKE without downtime\" --subtitle \"Zero customer-facing downtime · Unifonic · AWS to OCI\" --out public/og/aws-to-oci-forty-apps.png && node scripts/make-og.mjs --title \"What fractional CTO work actually looks like\" --subtitle \"Four companies · SOC 2 · AI assistant · GDPR · EKS\" --out public/og/fractional-cto-four-companies.png"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.0",

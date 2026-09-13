@@ -12,6 +12,16 @@ const roles = [
       'Cut tenant provisioning from 8-10 minutes to about 50 seconds with shared hosted control planes and a Go provisioning engine.',
       'Fractional CTO to four companies: healthcare SOC 2 readiness (22 pentest findings remediated), a travel-sector AI assistant on Azure OpenAI and RAG for ~1,300 users, manufacturing GDPR remediation, and media AWS/EKS operations with GPU nodes.',
     ],
+    links: [
+      {
+        href: '/writing/fractional-cto-four-companies/',
+        label: 'What fractional CTO work looks like across those four companies',
+      },
+      {
+        href: '/faq',
+        label: 'FAQ: what a fractional CTO for Kubernetes platforms does',
+      },
+    ],
   },
   {
     org: 'Unifonic',
@@ -24,6 +34,12 @@ const roles = [
       'Ran ~300 Kubernetes nodes (Rancher, EKS, OKE) behind a platform handling 10B+ messages a year.',
       'Wrote the reusable Terraform modules used org-wide; Kafka, Redis, PostgreSQL, and Cassandra running at SLA.',
     ],
+    links: [
+      {
+        href: '/writing/aws-to-oci-forty-apps/',
+        label: 'How the AWS to OCI migration actually went',
+      },
+    ],
   },
   {
     org: 'Emumba',
@@ -35,12 +51,14 @@ const roles = [
       'Delivered HIPAA/HITECH and PCI DSS compliant architectures on AWS and Azure.',
       'Ran a GKE cluster of 20+ microservices with Prometheus observability.',
     ],
+    links: [],
   },
 ];
 ---
 <Base
   title="Experience | Usman Ramzan"
   description="CTO at Eprecisio, previously Unifonic and Emumba. Multi-cloud Kubernetes, zero-downtime migrations, and compliant infrastructure."
+  includePerson
 >
   <section class="py-24 md:py-32">
     <div class="mx-auto max-w-5xl px-6">
@@ -67,6 +85,17 @@ const roles = [
                   </li>
                 ))}
               </ul>
+              {role.links.length > 0 && (
+                <ul class="mt-4 max-w-2xl space-y-2 text-sm">
+                  {role.links.map((link) => (
+                    <li>
+                      <a href={link.href} class="text-accent underline-offset-4 hover:underline">
+                        {link.label} &rarr;
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </article>
           ))
         }
