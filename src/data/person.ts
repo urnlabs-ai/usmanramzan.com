@@ -9,7 +9,7 @@ export const person = {
     'CTO at Eprecisio and fractional CTO. Seven years running multi-cloud Kubernetes platforms for companies where downtime is not an option.',
   email: 'mailto:usman.ramzan0505@gmail.com',
   url: siteUrl,
-  image: `${siteUrl}/og.png`,
+  image: `${siteUrl}/usman-portrait.jpg`,
   sameAs: [
     'https://www.linkedin.com/in/usman-ramzan',
     'https://github.com/usmanramzan',

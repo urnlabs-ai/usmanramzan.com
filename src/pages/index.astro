@@ -62,12 +62,16 @@ const timeline = [
         </p>
       </div>
       <div class="hidden md:col-span-4 md:block">
-        <!-- TODO: replace with portrait photo, 800x1000 -->
-        <div
-          class="flex aspect-[4/5] w-full items-center justify-center border border-line bg-[#f4f4f2]"
-          aria-hidden="true"
-        >
-          <span class="font-mono text-6xl text-[#d4d4d0]">UR</span>
+        <div class="aspect-[4/5] w-full overflow-hidden border border-line bg-[#f4f4f2]">
+          <img
+            src="/usman-portrait.jpg"
+            alt="Usman Ramzan"
+            width="800"
+            height="1000"
+            class="h-full w-full object-cover object-top"
+            loading="eager"
+            decoding="async"
+          />
         </div>
       </div>
     </div>
