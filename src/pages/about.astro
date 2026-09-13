@@ -1,9 +1,25 @@
 ---
 import Base from '../layouts/Base.astro';
+import { personJsonLd, siteUrl } from '../data/person';
+
+const person = personJsonLd();
+const { '@context': _ctx, ...personEntity } = person;
+const profileJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfilePage',
+  name: 'About Usman Ramzan',
+  url: `${siteUrl}/about`,
+  mainEntity: {
+    ...personEntity,
+    '@id': `${siteUrl}/#person`,
+  },
+};
 ---
 <Base
   title="About | Usman Ramzan"
   description="Lahore-based CTO and technical advisor. Seven years across Emumba, Unifonic, and Eprecisio, building cloud platforms where downtime is not an option."
+  ogType="profile"
+  jsonLd={profileJsonLd}
 >
   <section class="py-24 md:py-32">
     <div class="mx-auto grid max-w-6xl grid-cols-1 gap-12 px-6 md:grid-cols-12">
@@ -49,6 +65,11 @@ import Base from '../layouts/Base.astro';
             </li>
             <li>Writing here occasionally</li>
           </ul>
+          <p class="mt-6 text-sm text-muted">
+            <a href="/faq" class="text-accent underline-offset-4 hover:underline">
+              FAQ: what a fractional CTO for Kubernetes platforms does &rarr;
+            </a>
+          </p>
         </div>
       </div>
 

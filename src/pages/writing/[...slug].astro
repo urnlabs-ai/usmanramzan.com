@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import { siteUrl } from '../../data/person';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -11,8 +12,44 @@ const { post } = Astro.props;
 const { Content } = await render(post);
 const fmt = (d: Date) =>
   d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+
+const pageUrl = `${siteUrl}/writing/${post.id}/`;
+const ogImage = `/og/${post.id}.png`;
+const articleJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: post.data.title,
+  description: post.data.description,
+  datePublished: post.data.pubDate.toISOString(),
+  dateModified: post.data.pubDate.toISOString(),
+  author: {
+    '@type': 'Person',
+    '@id': `${siteUrl}/#person`,
+    name: 'Muhammad Usman Ramzan',
+    url: siteUrl,
+  },
+  publisher: {
+    '@type': 'Person',
+    '@id': `${siteUrl}/#person`,
+    name: 'Muhammad Usman Ramzan',
+    url: siteUrl,
+  },
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': pageUrl,
+  },
+  image: `${siteUrl}${ogImage}`,
+  url: pageUrl,
+};
 ---
-<Base title={post.data.title} description={post.data.description}>
+<Base
+  title={post.data.title}
+  description={post.data.description}
+  ogType="article"
+  ogImage={ogImage}
+  article={{ publishedTime: post.data.pubDate }}
+  jsonLd={articleJsonLd}
+>
   <section class="py-24 md:py-32">
     <div class="mx-auto max-w-5xl px-6">
       <article>

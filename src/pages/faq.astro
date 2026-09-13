@@ -1,0 +1,78 @@
+---
+import Base from '../layouts/Base.astro';
+
+const faqs = [
+  {
+    q: 'What does a fractional CTO for Kubernetes platforms do?',
+    a: 'A fractional CTO for Kubernetes platforms brings senior technical judgement a few days a week: which cluster and cloud problems are actually first, which vendor pitches to ignore, and how to keep multi-cloud platforms reliable without hiring a full-time executive yet. The work is ranked risks with owners and dates, not a vague advisory diary.',
+  },
+  {
+    q: 'How is that different from hiring a DevOps contractor?',
+    a: 'A contractor usually executes a known ticket. A fractional CTO decides what the tickets should be. On Kubernetes platforms that means trade-offs across cost, downtime risk, compliance, and build-versus-buy before anyone opens a pull request.',
+  },
+  {
+    q: 'What does Usman actually do as CTO at Eprecisio?',
+    a: 'At Eprecisio he owns technology strategy for an enterprise multi-cloud Kubernetes platform across twelve cloud providers: what to build versus buy, how tenants get provisioned (cut from 8–10 minutes to about 50 seconds), and how the platform stays reliable as it grows.',
+  },
+  {
+    q: 'What kinds of fractional engagements has he done?',
+    a: 'Four current-style engagements: healthcare SOC 2 readiness (22 pentest findings to a clean position), a travel-sector RAG assistant on Azure OpenAI for ~1,300 users, manufacturing GDPR remediation, and media AWS/EKS operations including GPU nodes.',
+  },
+  {
+    q: 'How long has he been doing this work?',
+    a: 'Seven years of cloud infrastructure, starting at Emumba in 2019, then three years at Unifonic on a 10B+ messages/year platform, then CTO at Eprecisio from September 2025, with fractional CTO work alongside.',
+  },
+  {
+    q: 'When is a fractional CTO the wrong hire?',
+    a: 'If you need someone writing production code every day, hire a staff engineer. If the problem is one deep specialty, hire that specialist. If nobody inside the company will act on recommendations, part-time advice becomes an expensive diary.',
+  },
+];
+
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: item.a,
+    },
+  })),
+};
+---
+<Base
+  title="FAQ | Usman Ramzan"
+  description="What a fractional CTO for Kubernetes platforms does: ranked risks, multi-cloud reliability, SOC 2, and when the hire is wrong."
+  includePerson
+  jsonLd={faqJsonLd}
+>
+  <section class="py-24 md:py-32">
+    <div class="mx-auto max-w-5xl px-6">
+      <h1 class="font-display text-5xl font-medium tracking-tight md:text-7xl">FAQ</h1>
+      <p class="mt-6 max-w-2xl text-lg text-muted">
+        Short answers about fractional CTO work, Kubernetes platforms, and how I spend the week.
+      </p>
+
+      <div class="mt-16 divide-y divide-line border-t border-line">
+        {
+          faqs.map((item) => (
+            <article class="py-10">
+              <h2 class="font-display text-2xl font-medium tracking-tight md:text-3xl">{item.q}</h2>
+              <p class="mt-4 max-w-2xl text-lg leading-relaxed text-muted">{item.a}</p>
+            </article>
+          ))
+        }
+      </div>
+
+      <p class="mt-12 text-sm text-muted">
+        More detail in
+        <a href="/writing/fractional-cto-four-companies/" class="text-accent underline-offset-4 hover:underline">
+          the fractional CTO post
+        </a>
+        and on
+        <a href="/experience" class="text-accent underline-offset-4 hover:underline">experience</a>.
+      </p>
+    </div>
+  </section>
+</Base>

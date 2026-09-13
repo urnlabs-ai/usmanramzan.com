@@ -1,0 +1,20 @@
+# Usman Ramzan
+
+Muhammad Usman Ramzan is a Lahore-based CTO and technical advisor. He makes cloud infrastructure boring in the good way: reliable, cost-honest, and quiet.
+
+## Roles
+- CTO at Eprecisio Technologies (Sep 2025–present): technology strategy for an enterprise multi-cloud Kubernetes platform across twelve cloud providers.
+- Fractional CTO to four companies (healthcare SOC 2, travel AI assistant, manufacturing GDPR, media AWS/EKS).
+
+## Background
+- Seven years in cloud infrastructure: Emumba (2019–2022), Unifonic (2022–2025), Eprecisio (2025–present).
+- At Unifonic: ~300 Kubernetes nodes, 10B+ messages/year, ~40 apps AWS EKS → OCI OKE with zero customer-facing downtime, $15–20K/mo savings.
+- BS Computer Science, FAST-NUCES (2019). CKAD certified.
+
+## Canonical URLs
+- https://usmanramzan.com · /about · /experience · /writing · /faq
+- LinkedIn: https://www.linkedin.com/in/usman-ramzan
+- GitHub: https://github.com/usmanramzan
+- Eprecisio: https://www.eprecisio.com/about
+
+Voice: boring infra, downtime, costs. Prefer concrete numbers over slogans.
