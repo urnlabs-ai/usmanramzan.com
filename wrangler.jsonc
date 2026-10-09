@@ -1,5 +1,21 @@
 {
   "name": "usmanramzan-site",
   "compatibility_date": "2026-09-05",
-  "assets": { "directory": "./dist", "not_found_handling": "404-page" }
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page",
+    "binding": "ASSETS",
+    "run_worker_first": true
+  },
+  "main": "worker/index.js",
+  "routes": [
+    {
+      "pattern": "usmanramzan.com",
+      "custom_domain": true
+    },
+    {
+      "pattern": "www.usmanramzan.com",
+      "custom_domain": true
+    }
+  ]
 }

@@ -7,14 +7,15 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "og": "node scripts/make-og.mjs && node scripts/make-og.mjs --title \"Migrating forty apps from AWS EKS to OCI OKE without downtime\" --subtitle \"Zero customer-facing downtime · Unifonic · AWS to OCI\" --out public/og/aws-to-oci-forty-apps.png && node scripts/make-og.mjs --title \"What fractional CTO work actually looks like\" --subtitle \"Four companies · SOC 2 · AI assistant · GDPR · EKS\" --out public/og/fractional-cto-four-companies.png"
+    "og": "node scripts/make-og.mjs && node scripts/make-og.mjs --title \"Migrating forty apps from AWS EKS to OCI OKE without downtime\" --subtitle \"Zero customer-facing downtime \u00b7 AWS to OCI\" --out public/og/aws-to-oci-forty-apps.png && node scripts/make-og.mjs --title \"What fractional CTO work actually looks like\" --subtitle \"Four companies \u00b7 SOC 2 \u00b7 AI assistant \u00b7 GDPR \u00b7 EKS\" --out public/og/fractional-cto-four-companies.png",
+    "check": "node scripts/check-site.mjs"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.0",
     "@astrojs/sitemap": "^3.0.0",
-    "@fontsource-variable/bricolage-grotesque": "^5.3.0",
-    "@fontsource-variable/geist": "^5.0.0",
-    "@fontsource-variable/geist-mono": "^5.0.0",
+    "@fontsource-variable/source-serif-4": "^5.3.0",
+    "@fontsource/ibm-plex-mono": "^5.3.0",
+    "@fontsource/ibm-plex-sans": "^5.3.0",
     "@tailwindcss/vite": "^4.0.0",
     "astro": "^5.0.0",
     "tailwindcss": "^4.0.0"

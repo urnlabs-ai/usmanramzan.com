@@ -2,11 +2,11 @@
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 
-const posts = (await getCollection('blog')).sort(
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 const fmt = (d: Date) =>
-  d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+  d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 
 const groups = new Map<number, typeof posts>();
 for (const post of posts) {
@@ -18,39 +18,63 @@ for (const post of posts) {
   title="Writing | Usman Ramzan"
   description="Notes on cloud infrastructure, platform engineering, migrations, and fractional CTO work."
 >
-  <section class="py-24 md:py-32">
-    <div class="mx-auto max-w-6xl px-6">
-      <h1 class="font-display text-5xl font-medium tracking-tight md:text-7xl">Writing</h1>
-      <p class="mt-6 max-w-2xl text-lg text-muted">
-        Notes on cloud infrastructure, platform engineering, and running technology for
-        companies that cannot afford downtime.
+  <section class="writing-archive">
+    <header class="archive-intro">
+      <p class="eyebrow">Notes from the work</p>
+      <h1>Writing</h1>
+      <p class="archive-description">
+        Practical notes on cloud infrastructure, platform engineering, and the decisions behind reliable systems.
       </p>
+      <a class="rss-link" href="/rss.xml">Subscribe via RSS <span aria-hidden="true">↗</span></a>
+    </header>
 
-      <div class="mt-16 divide-y divide-line border-t border-line">
-        {
-          [...groups].map(([year, list]) => (
-            <div class="grid grid-cols-1 gap-y-6 py-12 md:grid-cols-12 md:gap-x-8">
-              <div class="md:col-span-2">
-                <p class="font-mono text-sm text-muted md:sticky md:top-24">{year}</p>
-              </div>
-              <ul class="space-y-12 md:col-span-10">
-                {list.map((post) => (
-                  <li>
-                    <a
-                      href={`/writing/${post.id}/`}
-                      class="font-display text-2xl font-medium underline-offset-4 hover:text-accent hover:underline"
-                    >
-                      {post.data.title}
-                    </a>
-                    <p class="mt-2 font-mono text-xs text-muted">{fmt(post.data.pubDate)}</p>
-                    <p class="mt-3 max-w-2xl text-muted">{post.data.description}</p>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))
-        }
-      </div>
+    <div class="archive-groups">
+      {[...groups].map(([year, list]) => (
+        <section class="archive-year" aria-labelledby={`year-${year}`}>
+          <h2 id={`year-${year}`}>{year}</h2>
+          <ul>
+            {list.map((post) => (
+              <li>
+                <time datetime={post.data.pubDate.toISOString()}>{fmt(post.data.pubDate)}</time>
+                <div>
+                  <a href={`/writing/${post.id}/`} class="article-title">
+                    {post.data.title}
+                  </a>
+                  <p>{post.data.description}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
     </div>
   </section>
 </Base>
+
+<style>
+  .writing-archive { padding-block: 0; --paper: #f7f8f6; --ink: #202922; --green: #315448; --rule: #d9dfda; color: var(--ink); }
+  .archive-intro, .archive-groups { width: min(calc(100% - 3rem), 58rem); margin-inline: auto; }
+  .archive-intro { padding: clamp(3rem, 7vw, 5.5rem) 0 2.5rem; }
+  .eyebrow { margin: 0; color: #65736b; font: 500 .7rem/1.5 'IBM Plex Mono', monospace; letter-spacing: .08em; text-transform: uppercase; }
+  .archive-intro h1 { margin: .75rem 0 .8rem; font: 500 clamp(3.25rem, 8vw, 5.5rem)/.98 'IBM Plex Sans', sans-serif; letter-spacing: -.065em; }
+  .archive-description { max-width: 38rem; margin: 0; color: #536159; font: 400 clamp(1.05rem, 1.8vw, 1.25rem)/1.55 'Source Serif 4 Variable', serif; }
+  .rss-link { display: inline-flex; align-items: center; gap: .5rem; margin-top: 1.3rem; color: var(--green); font-size: .82rem; font-weight: 550; text-decoration: none; }
+  .rss-link:hover { text-decoration: underline; text-underline-offset: .25rem; }
+  .archive-groups { border-top: 1px solid var(--rule); }
+  .archive-year { display: grid; grid-template-columns: 8rem minmax(0, 1fr); gap: 1.5rem; padding: 1.7rem 0 2rem; border-bottom: 1px solid var(--rule); }
+  .archive-year h2 { position: sticky; top: 6rem; align-self: start; margin: .2rem 0; color: #66736b; font: 500 .75rem/1.5 'IBM Plex Mono', monospace; }
+  .archive-year ul { padding: 0; margin: 0; list-style: none; }
+  .archive-year li { display: grid; grid-template-columns: 5.5rem minmax(0, 1fr); gap: 1rem; padding: .35rem 0 1.5rem; }
+  .archive-year li + li { padding-top: 1.4rem; border-top: 1px solid #e8ebe7; }
+  .archive-year time { padding-top: .22rem; color: #748078; font: .67rem/1.5 'IBM Plex Mono', monospace; }
+  .article-title { color: var(--ink); font: 500 1.17rem/1.35 'IBM Plex Sans', sans-serif; letter-spacing: -.02em; text-decoration: none; }
+  .article-title:hover { color: var(--green); }
+  .article-title span { color: var(--green); font-size: .8em; }
+  .archive-year li p { max-width: 42rem; margin: .4rem 0 0; color: #59665e; font: 400 .96rem/1.55 'Source Serif 4 Variable', serif; }
+  @media (max-width: 600px) {
+    .archive-intro, .archive-groups { width: min(calc(100% - 2.5rem), 58rem); }
+    .archive-year { grid-template-columns: 1fr; gap: .85rem; padding-top: 1.2rem; }
+    .archive-year h2 { position: static; }
+    .archive-year li { grid-template-columns: 1fr; gap: .45rem; }
+  }
+</style>
