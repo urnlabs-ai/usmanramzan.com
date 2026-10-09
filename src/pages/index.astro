@@ -1,185 +1,199 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
+import Portrait from '../components/Portrait.astro';
+import { consulting, services } from '../data/consulting';
+import { caseStudies } from '../data/case-studies';
+import { recommendations, recommendationSource } from '../data/recommendations';
+import { siteUrl } from '../data/person';
 
-const posts = (await getCollection('blog'))
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
   .slice(0, 3);
-
-const fmt = (d: Date) =>
-  d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-
-const timeline = [
-  {
-    year: '2019',
-    org: 'Emumba',
-    line: 'DevOps engineer and founder of the Cloud Center of Excellence.',
-  },
-  {
-    year: '2022',
-    org: 'Unifonic',
-    line: 'Three years on the platform sending over ten billion messages a year.',
-  },
-  {
-    year: '2025',
-    org: 'Eprecisio',
-    line: 'CTO. Technology strategy for an enterprise multi-cloud Kubernetes platform.',
-  },
-  {
-    year: 'Now',
-    org: 'Fractional CTO',
-    line: 'Four companies. Vague technical anxiety, ranked list of problems with owners and dates.',
-  },
-];
+const fmt = (d: Date) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+const serviceSchemas = services.map((service) => ({
+  '@context': 'https://schema.org', '@type': 'Service',
+  '@id': `${siteUrl}/#${service.id}`, name: service.name,
+  description: service.deliverables,
+  provider: { '@type': 'Organization', '@id': `${consulting.brandUrl}#organization`, name: consulting.brand },
+  url: `${siteUrl}/work-with-me/#${service.id}`,
+}));
 ---
 <Base
-  title="Usman Ramzan, CTO and technical advisor"
-  description="Seven years running multi-cloud platforms for companies where downtime is not an option. CTO at Eprecisio, fractional CTO to four more."
+  title="Fractional CTO, DevOps & AI Agents | Usman Ramzan"
+  description="Fractional CTO, DevOps and AI-agent engineering for B2B SaaS teams through URN Labs. Book a 30-minute introductory call."
   includePerson
-  ogType="website"
+  jsonLd={serviceSchemas}
 >
-  <section class="pt-28 pb-24">
-    <div class="mx-auto grid max-w-6xl grid-cols-1 gap-12 px-6 md:grid-cols-12">
-      <div class="md:col-span-8">
-        <p class="text-sm text-muted">Muhammad Usman Ramzan, CTO and technical advisor</p>
-        <h1
-          class="mt-8 font-display text-5xl font-medium leading-[1.0] tracking-[-0.025em] text-ink md:text-7xl"
-        >
-          I make cloud infrastructure <span class="font-light">boring,</span><br />
-          in the good way.
-        </h1>
-        <p class="mt-8 max-w-[52ch] text-lg text-muted">
-          Seven years running multi-cloud platforms for companies where downtime is not an
-          option. CTO at Eprecisio, fractional CTO to four more.
-        </p>
-        <p class="mt-10">
-          <a
-            href="/about"
-            class="inline-block rounded-full bg-ink px-7 py-3 text-sm text-white transition-opacity hover:opacity-80"
-          >
-            Read about me
-          </a>
-        </p>
-      </div>
-      <div class="hidden md:col-span-4 md:block">
-        <div class="aspect-[4/5] w-full overflow-hidden border border-line bg-[#f4f4f2]">
-          <img
-            src="/usman-portrait.jpg"
-            alt="Usman Ramzan"
-            width="800"
-            height="1000"
-            class="h-full w-full object-cover object-top"
-            loading="eager"
-            decoding="async"
-          />
+  <section class="home-hero">
+    <div class="home-hero__inner">
+      <div class="home-hero__copy">
+        <p class="eyebrow">Consulting through <a href={consulting.brandUrl}>URN Labs ↗</a></p>
+        <h1>Fractional CTO, DevOps<br class="desktop-break" /> &amp; <span class="agent-word">AI-agent</span> engineering.</h1>
+        <p class="home-hero__intro">I help B2B SaaS teams make technical decisions, build reliable infrastructure, and put AI workflows into practice.</p>
+        <div class="hero-actions">
+          <a class="button-primary" href={consulting.callHref}>{consulting.callLabel} <span aria-hidden="true">↗</span></a>
+          <a class="text-link" href="/work/">See the work <span aria-hidden="true">↗</span></a>
         </div>
+        <p class="call-coordination">We’ll coordinate a time by email.</p>
       </div>
+      <figure class="home-hero__portrait"><Portrait /></figure>
     </div>
   </section>
 
-  <section class="w-full bg-[#111] py-24 text-white">
-    <div class="mx-auto grid max-w-6xl grid-cols-1 gap-10 px-6 md:grid-cols-2 lg:grid-cols-4">
-      {
-        timeline.map((item) => (
-          <div>
-            <span class="block h-0.5 w-8 bg-accent" aria-hidden="true" />
-            <p class="mt-4 font-mono text-sm text-accent">{item.year}</p>
-            <p class="mt-3 font-display text-xl font-medium">{item.org}</p>
-            <p class="mt-2 text-sm leading-relaxed text-white/70">{item.line}</p>
-          </div>
-        ))
-      }
+  <section class="home-services" aria-labelledby="services-heading">
+    <div class="section-heading"><h2 id="services-heading">Where I can help</h2></div>
+    <p class="section-intro">For founders and engineering leads who need a clear plan and help carrying it through.</p>
+    <div class="service-list">
+      {services.map((service, index) => (
+        <article class="service-row">
+          <div><p class="service-number">0{index + 1}</p><h3><a href={`/work-with-me/#${service.id}`}>{service.name}</a></h3></div>
+          <div><p class="service-trigger">{service.trigger}</p><p>{service.deliverables}</p><a class="text-link" href={`/work-with-me/#${service.id}`}>How we’d work together ↗</a></div>
+        </article>
+      ))}
     </div>
   </section>
 
-  <section class="py-24 md:py-32">
-    <div class="mx-auto max-w-6xl px-6">
-      <div class="grid grid-cols-1 gap-y-10 border-t border-line sm:grid-cols-2 md:grid-cols-4">
-        {
-          [
-            { fig: '$15-20K/mo', what: 'monthly cloud savings, Unifonic' },
-            { fig: '10B+', what: 'messages a year on the platform' },
-            { fig: '~40 apps', what: 'migrated zero downtime, AWS to OCI' },
-            { fig: '12', what: 'cloud providers in one platform, Eprecisio' },
-          ].map(({ fig, what }) => (
-            <div class="pt-6">
-              <p class="font-display text-3xl font-medium tabular-nums tracking-tight md:text-4xl pr-6">{fig}</p>
-              <p class="mt-2 text-sm text-muted">{what}</p>
-            </div>
-          ))}
-      </div>
-
-      <h2 class="mt-28 text-xl font-medium">Selected work</h2>
-      <ul class="mt-6 divide-y divide-line">
-        <li class="flex flex-col gap-3 py-7 md:flex-row md:items-baseline md:justify-between md:gap-8">
-          <div>
-            <h3 class="font-display text-xl font-medium md:text-2xl">AWS to OCI migration</h3>
-            <p class="mt-1 text-muted">
-              Forty applications and twenty databases moved from AWS EKS to OCI OKE across ten
-              teams. Zero customer-facing downtime.
-            </p>
-          </div>
-          <a
-            href="/writing/aws-to-oci-forty-apps/"
-            class="shrink-0 text-sm text-accent underline-offset-4 hover:underline"
-          >
-            Read the write-up &rarr;
-          </a>
-        </li>
-        <li class="flex flex-col gap-3 py-7 md:flex-row md:items-baseline md:justify-between md:gap-8">
-          <div>
-            <h3 class="font-display text-xl font-medium md:text-2xl">AI knowledge assistant</h3>
-            <p class="mt-1 text-muted">
-              A RAG assistant on Azure OpenAI for a 1,300-person travel company, so staff could
-              stop digging through documents for answers.
-            </p>
-          </div>
-          <a
-            href="/writing/fractional-cto-four-companies/"
-            class="shrink-0 text-sm text-accent underline-offset-4 hover:underline"
-          >
-            Read the write-up &rarr;
-          </a>
-        </li>
-        <li class="flex flex-col gap-3 py-7 md:flex-row md:items-baseline md:justify-between md:gap-8">
-          <div>
-            <h3 class="font-display text-xl font-medium md:text-2xl">SOC 2 readiness</h3>
-            <p class="mt-1 text-muted">
-              Took a healthcare SaaS from 22 open pentest findings to a clean report and
-              audit-ready evidence.
-            </p>
-          </div>
-          <a
-            href="/writing/fractional-cto-four-companies/"
-            class="shrink-0 text-sm text-accent underline-offset-4 hover:underline"
-          >
-            Read the write-up &rarr;
-          </a>
-        </li>
-      </ul>
-
-      <div class="mt-28 flex items-baseline justify-between gap-6">
-        <h2 class="text-xl font-medium">Recent writing</h2>
-        <a href="/writing" class="shrink-0 text-sm text-muted transition-colors hover:text-ink">
-          All writing
-        </a>
-      </div>
-      <ul class="mt-6 divide-y divide-line">
-        {
-          posts.map((post) => (
-            <li class="py-7">
-              <a
-                href={`/writing/${post.id}/`}
-                class="font-display text-xl font-medium underline-offset-4 hover:text-accent hover:underline md:text-2xl"
-              >
-                {post.data.title} <span aria-hidden="true">&rarr;</span>
-              </a>
-              <p class="mt-1 font-mono text-xs text-muted">{fmt(post.data.pubDate)}</p>
-              <p class="mt-2 text-muted">{post.data.description}</p>
-            </li>
-          ))
-        }
+  <section class="home-proof" aria-labelledby="proof-heading">
+    <div class="section-heading"><h2 id="proof-heading">Experience behind the work</h2><a class="text-link" href="/experience/">Full experience ↗</a></div>
+    <p class="section-intro">Selected results across earlier infrastructure and technical leadership work.</p>
+    <div class="proof-metrics">
+      <div><strong>$15–20K/mo</strong><span>monthly cloud savings</span></div>
+      <div><strong>10B+</strong><span>messages a year on the platform</span></div>
+      <div><strong>~40 apps</strong><span>migrated without customer downtime</span></div>
+      <div><strong>12 providers</strong><span>in one cloud platform</span></div>
+    </div>
+    <div class="selected-work">
+      <div class="section-heading"><h2>Selected consulting work</h2><a class="text-link" href="/work/">All case studies ↗</a></div>
+      <p class="section-intro">Client identities stay private. These summaries describe the work, its outcome, and its limits.</p>
+      <ul class="case-list">
+        {caseStudies.map((study) => (
+          <li><p class="case-sector">{study.sector}</p><h3><a href={`/work/${study.slug}/`}>{study.title} <span aria-hidden="true">↗</span></a></h3><p>{study.summary}</p></li>
+        ))}
       </ul>
     </div>
+  </section>
+
+  <section class="home-recommendations" aria-labelledby="recommendations-heading">
+    <div class="section-heading"><h2 id="recommendations-heading">People I’ve worked with</h2></div>
+    <p class="section-intro">Short excerpts from public LinkedIn recommendations about earlier collaboration.</p>
+    <div class="recommendation-list">
+      {recommendations.map((item) => (
+        <figure><blockquote>“{item.quote}”</blockquote><figcaption><a href={item.profile}>{item.name} ↗</a><span>{item.role}</span><span>{item.date}</span></figcaption></figure>
+      ))}
+    </div>
+    <a class="text-link" href={recommendationSource}>Read the full recommendations on LinkedIn ↗</a>
+  </section>
+
+  <section class="home-writing" aria-labelledby="latest-writing">
+    <div class="section-heading"><h2 id="latest-writing">Notes from the work</h2><a class="text-link" href="/writing/">All writing ↗</a></div>
+    <ul class="writing-list">
+      {posts.map((post) => (
+        <li class="writing-item"><time class="writing-item__date" datetime={post.data.pubDate.toISOString()}>{fmt(post.data.pubDate)}</time><div><a href={`/writing/${post.id}/`} class="writing-item__title">{post.data.title} <span aria-hidden="true">↗</span></a><p>{post.data.description}</p></div></li>
+      ))}
+    </ul>
   </section>
 </Base>
+<style>
+  .home-hero, .home-writing, .home-proof { --paper: #f7f8f6; --ink: #202922; --green: #315448; --rule: #d9dfda; }
+  .home-hero { background: var(--paper); color: var(--ink); padding: clamp(3rem, 5vw, 4rem) 1.5rem clamp(2rem, 4vw, 3.5rem); }
+  .home-hero__inner, .home-writing, .home-proof { width: min(100%, 70rem); margin-inline: auto; }
+  .home-hero__inner { display: grid; grid-template-columns: minmax(0, 1fr) minmax(13rem, 19rem); align-items: center; gap: clamp(2rem, 8vw, 7rem); }
+  .eyebrow { margin: 0; color: #65736b; font: 500 .7rem/1.5 'IBM Plex Mono', monospace; letter-spacing: .08em; text-transform: uppercase; }
+  .eyebrow span { color: var(--green); }
+  .home-hero h1 { margin: 1.4rem 0 1.25rem; font: 500 clamp(2.45rem, 4vw, 3.3rem)/1.08 'IBM Plex Sans', sans-serif; letter-spacing: -.045em; }
+  .home-hero__intro { max-width: 33rem; margin: 0; color: #536159; font: 400 clamp(1.05rem, 1.6vw, 1.25rem)/1.55 'Source Serif 4 Variable', serif; }
+  .text-link { display: inline-flex; gap: .55rem; align-items: center; color: var(--green); font-size: .86rem; font-weight: 550; text-decoration: none; }
+  .text-link:hover { text-decoration: underline; text-underline-offset: .25rem; }
+  .hero-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 18px 24px; margin-top: 26px; }
+  .home-hero__portrait { width: 100%; aspect-ratio: 4 / 4.7; margin: 0; overflow: hidden; background: #e7e9e5; }
+  .home-hero__portrait :global(img) { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+  .home-writing { padding: clamp(2.5rem, 4vw, 3rem) 1.5rem; color: var(--ink); }
+  .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 1rem; }
+  .section-heading h2 { margin: .4rem 0 0; font: 500 clamp(1.65rem, 3vw, 2.25rem)/1.1 'IBM Plex Sans', sans-serif; letter-spacing: -.04em; }
+  .section-heading > .text-link { margin-bottom: .25rem; }
+  .writing-list, .work-list { padding: 0; margin: 1.5rem 0 0; list-style: none; border-top: 1px solid var(--rule); }
+  .writing-item { display: grid; grid-template-columns: 9rem minmax(0, 1fr); gap: 1.25rem; padding: 1.35rem 0; border-bottom: 1px solid var(--rule); }
+  .writing-item__date { padding-top: .25rem; color: #69756e; font: .7rem/1.5 'IBM Plex Mono', monospace; }
+  .writing-item__title { color: var(--ink); font: 500 1.22rem/1.3 'IBM Plex Sans', sans-serif; letter-spacing: -.025em; text-decoration: none; }
+  .writing-item__title:hover { color: var(--green); }
+  .writing-item__title span { color: var(--green); font-size: .85em; }
+  .writing-item p, .work-list p { max-width: 48rem; margin: .4rem 0 0; color: #59665e; font: 400 .98rem/1.55 'Source Serif 4 Variable', serif; }
+  .home-proof { padding: 0 1.5rem 4.5rem; color: var(--ink); }
+  .proof-metrics { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-block: 1px solid var(--rule); }
+  .proof-metrics > div { padding: 1.25rem 1rem 1.3rem 0; }
+  .proof-metrics strong { display: block; font: 500 clamp(1.25rem, 2.4vw, 1.8rem)/1.2 'IBM Plex Sans', sans-serif; letter-spacing: -.04em; }
+  .proof-metrics span { display: block; margin-top: .35rem; color: #657169; font: .7rem/1.5 'IBM Plex Mono', monospace; }
+  .selected-work { padding-top: 3.5rem; }
+  .work-list { margin-top: 1.25rem; }
+  .work-list li { display: grid; grid-template-columns: minmax(0, 1fr) 2rem; align-items: center; gap: 1.5rem; padding: 1rem 0; border-bottom: 1px solid var(--rule); }
+  .work-list h3, .experience-grid h3 { margin: 0; font: 500 1rem/1.35 'IBM Plex Sans', sans-serif; }
+  .work-list p { margin-top: .2rem; font-size: .9rem; }
+  .work-list > li > a { color: var(--green); text-align: right; text-decoration: none; }
+  .experience-strip { margin-top: 3.5rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); }
+  .experience-heading { font-size: 1.1rem; font-weight: 500; }
+  .experience-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.5rem; margin-top: 1.1rem; }
+  .experience-grid__year { margin: 0 0 .55rem; color: var(--green); font: .7rem/1.4 'IBM Plex Mono', monospace; }
+  .experience-grid__line { margin: .35rem 0 0; color: #657169; font: .85rem/1.5 'Source Serif 4 Variable', serif; }
+  .home-writing, .home-proof { width: min(1120px, calc(100% - 64px)); padding-inline: 0; }
+  @media (max-width: 640px) {
+    .home-hero__inner { grid-template-columns: 1fr; gap: 1rem; position: relative; }
+    .home-hero__copy > .eyebrow { max-width: calc(100% - 100px); min-height: 65px; }
+    .home-hero { padding-inline: 1.25rem; }
+    .home-hero__portrait { position: absolute; right: 0; top: 0; width: 72px; aspect-ratio: 1 / 1.25; }
+    .home-hero h1 { margin-top: 1.1rem; font-size: clamp(2rem, 8vw, 2.6rem); letter-spacing: -.04em; }
+    .desktop-break { display: none; }
+    .home-hero__intro { font-size: 1rem; }
+    .home-writing, .home-proof { width: calc(100% - 40px); padding-inline: 0; }
+    .writing-item { grid-template-columns: 1fr; gap: .35rem; padding: 1.1rem 0; }
+    .proof-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .proof-metrics > div:nth-child(2n) { padding-right: 0; }
+    .experience-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 1.25rem; }
+  }
+  @media (max-width: 360px) {
+    .home-hero__inner { grid-template-columns: 1fr; }
+    .eyebrow { font-size: .62rem; }
+    .home-hero h1 { font-size: 1.8rem; }
+    .section-heading { align-items: start; }
+    .section-heading > .text-link { white-space: nowrap; font-size: .78rem; }
+  }
+
+  .home-services { width: min(1120px, calc(100% - 64px)); margin-inline: auto; padding-block: 24px 64px; }
+  .section-intro { margin-top: 14px; max-width: 640px; color: var(--color-muted); font-size: 16px; line-height: 1.7; }
+  .service-list { margin-top: 28px; border-top: 1px solid var(--color-line); }
+  .service-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 48px; padding-block: 28px; border-bottom: 1px solid var(--color-line); }
+  .service-row h3 { font-size: 23px; font-weight: 500; letter-spacing: -.025em; margin-top: 8px; }
+  .service-row h3 a:hover { color: var(--color-accent); }
+  .service-number { font-family: var(--font-mono); color: var(--color-accent); font-size: 12px; }
+  .service-row p:not(.service-number) { font-size: 15px; line-height: 1.7; color: var(--color-muted); }
+  .service-row .service-trigger { color: var(--color-ink) !important; font-weight: 500; margin-bottom: 8px; }
+  .service-row .text-link { margin-top: 16px; }
+  .proof-metrics { margin-top: 28px; }
+  .case-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 48px; list-style: none; margin-top: 28px; border-top: 1px solid var(--color-line); }
+  .case-list li { padding-block: 24px; border-bottom: 1px solid var(--color-line); }
+  .case-sector { color: var(--color-muted); font-size: 12px; margin-bottom: 10px; }
+  .case-list h3 { font-size: 21px; font-weight: 500; line-height: 1.4; }
+  .case-list h3 a:hover { color: var(--color-accent); }
+  .case-list li > p:last-child { font-size: 15px; line-height: 1.7; margin-top: 10px; color: var(--color-muted); }
+  @media (max-width: 767px) {
+    .home-services { width: calc(100% - 40px); padding-bottom: 40px; }
+    .service-row { grid-template-columns: 1fr; gap: 16px; }
+    .case-list { grid-template-columns: 1fr; }
+    .hero-actions { gap: 18px; }
+  }
+
+ .agent-word { white-space: nowrap; }
+ .call-coordination { margin-top: 12px; font-size: 12px; color: var(--color-muted); }
+ .home-recommendations { width: min(1120px, calc(100% - 64px)); margin-inline: auto; padding-block: 32px 48px; }
+ .recommendation-list { margin-block: 24px; border-top: 1px solid var(--color-line); }
+ .recommendation-list figure { display: grid; grid-template-columns: minmax(0, 1fr) 240px; gap: 48px; padding-block: 24px; border-bottom: 1px solid var(--color-line); }
+ .recommendation-list blockquote { font-family: 'Source Serif 4 Variable', Georgia, serif; font-size: 24px; line-height: 1.5; max-width: 600px; }
+ .recommendation-list figcaption { font-size: 13px; line-height: 1.7; }
+ .recommendation-list figcaption a { color: var(--color-accent); }
+ .recommendation-list figcaption span { display: block; color: var(--color-muted); font-size: 12px; }
+ @media (max-width: 767px) {
+  .home-recommendations { width: calc(100% - 40px); }
+  .recommendation-list figure { grid-template-columns: 1fr; gap: 14px; }
+  .recommendation-list blockquote { font-size: 22px; }
+ }
+</style>

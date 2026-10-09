@@ -1,0 +1,68 @@
+---
+import Base from '../../layouts/Base.astro';
+import { consulting } from '../../data/consulting';
+import { caseStudies } from '../../data/case-studies';
+---
+<Base
+  title="Fractional CTO Case Studies | Usman Ramzan"
+  description="Anonymized examples of fractional CTO work across security readiness, AI knowledge systems, data remediation, and cloud operations."
+>
+  <section class="work-page">
+    <div class="site-shell">
+      <header class="work-intro">
+        <p class="eyebrow">Selected engagements</p>
+        <h1>Work that makes the next decision clearer.</h1>
+        <p class="work-lede">Four different teams, four practical problems. These examples show how I approached the problem, what the work delivered, and where its scope ended.</p>
+      </header>
+
+      <div class="case-list">
+        {caseStudies.map((study, index) => (
+          <article class="case-row">
+            <span class="case-number">0{index + 1}</span>
+            <div class="case-copy">
+              <p class="case-sector">{study.sector}</p>
+              <h2><a href={`/work/${study.slug}/`}>{study.title} <span aria-hidden="true">↗</span></a></h2>
+              <p>{study.summary}</p>
+            </div>
+            <a class="case-open" href={`/work/${study.slug}/`} aria-label={`Read case study: ${study.title}`}>Read case <span aria-hidden="true">→</span></a>
+          </article>
+        ))}
+      </div>
+
+      <aside class="work-cta">
+        <p>Have a similar decision to make?</p>
+        <a href={consulting.callHref}>{consulting.callLabel} <span aria-hidden="true">↗</span></a>
+      </aside>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .work-page { padding-block: 64px 88px; }
+  .work-intro { max-width: 760px; padding: 24px 0 50px; }
+  .eyebrow, .case-sector { margin: 0; color: var(--color-muted); font-family: var(--font-mono); font-size: 11px; letter-spacing: .07em; text-transform: uppercase; }
+  .work-intro h1 { max-width: 700px; margin-top: 18px; font-family: var(--font-display); font-size: clamp(2.6rem, 6vw, 4.5rem); font-weight: 500; line-height: 1.02; letter-spacing: -.055em; }
+  .work-lede { max-width: 620px; margin-top: 20px; color: var(--color-muted); font-family: 'Source Serif 4 Variable', Georgia, serif; font-size: 20px; line-height: 1.55; }
+  .case-list { border-top: 1px solid var(--color-line); }
+  .case-row { display: grid; grid-template-columns: 46px minmax(0, 1fr) 118px; align-items: center; gap: 20px; padding: 26px 0; border-bottom: 1px solid var(--color-line); }
+  .case-number { align-self: start; padding-top: 3px; color: var(--color-accent); font-family: var(--font-mono); font-size: 11px; }
+  .case-copy h2 { margin-top: 7px; font-family: var(--font-display); font-size: clamp(1.25rem, 2.6vw, 1.65rem); font-weight: 500; line-height: 1.25; letter-spacing: -.03em; }
+  .case-copy h2 a { text-decoration: none; }
+  .case-copy h2 a:hover { color: var(--color-accent); }
+  .case-copy h2 span { color: var(--color-accent); font-size: .75em; }
+  .case-copy > p:last-child { max-width: 620px; margin-top: 7px; color: var(--color-muted); font-family: 'Source Serif 4 Variable', Georgia, serif; font-size: 16px; line-height: 1.55; }
+  .case-open { justify-self: end; color: var(--color-accent); font-size: 13px; white-space: nowrap; }
+  .case-open:hover { text-decoration: underline; text-underline-offset: 4px; }
+  .work-cta { display: flex; justify-content: space-between; align-items: center; gap: 20px; margin-top: 44px; padding: 22px 24px; background: #edf1ed; }
+  .work-cta p { font-family: var(--font-display); font-size: 18px; font-weight: 500; }
+  .work-cta a { color: var(--color-accent); font-size: 13px; font-weight: 500; white-space: nowrap; }
+  @media (max-width: 600px) {
+    .work-page { padding-block: 40px 56px; }
+    .work-intro { padding: 12px 0 32px; }
+    .work-lede { font-size: 18px; }
+    .case-row { grid-template-columns: 32px minmax(0, 1fr); gap: 12px; padding: 20px 0; }
+    .case-open { grid-column: 2; justify-self: start; margin-top: -4px; }
+    .work-cta { display: block; padding: 20px; }
+    .work-cta a { display: inline-block; margin-top: 10px; }
+  }
+</style>

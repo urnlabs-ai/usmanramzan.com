@@ -1,15 +1,19 @@
 ---
-import '@fontsource-variable/geist';
-import '@fontsource-variable/geist-mono';
-import '@fontsource-variable/bricolage-grotesque/standard.css';
+import '@fontsource/ibm-plex-sans/latin-400.css';
+import '@fontsource/ibm-plex-sans/latin-500.css';
+import '@fontsource/ibm-plex-sans/latin-600.css';
+import '@fontsource/ibm-plex-mono/latin-400.css';
 import '../styles/global.css';
-import { personJsonLd, siteUrl } from '../data/person';
+import readerFont from '@fontsource-variable/source-serif-4/files/source-serif-4-latin-wght-normal.woff2?url';
+import { consulting } from '../data/consulting';
+import { personJsonLd, organizationJsonLd, siteUrl } from '../data/person';
 
 interface Props {
   title: string;
   description: string;
   ogType?: 'website' | 'article' | 'profile';
   ogImage?: string;
+  noindex?: boolean;
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
   /** When true, emit the default Person graph (home / about / profile pages). */
   includePerson?: boolean;
@@ -27,6 +31,7 @@ const {
   jsonLd,
   includePerson = false,
   article,
+  noindex = false,
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
@@ -34,7 +39,7 @@ const ogImageUrl = new URL(ogImage, Astro.site).href;
 const twitterTitle = title.includes('Usman Ramzan') ? title : `${title} | Usman Ramzan`;
 
 const graphs: Record<string, unknown>[] = [];
-if (includePerson) graphs.push(personJsonLd());
+if (includePerson) graphs.push(personJsonLd(), organizationJsonLd());
 if (jsonLd) graphs.push(...(Array.isArray(jsonLd) ? jsonLd : [jsonLd]));
 const structuredData =
   graphs.length === 0
@@ -44,10 +49,11 @@ const structuredData =
       : { '@context': 'https://schema.org', '@graph': graphs.map(({ '@context': _c, ...rest }) => rest) };
 
 const nav = [
-  { href: '/about', label: 'About' },
-  { href: '/experience', label: 'Experience' },
-  { href: '/writing', label: 'Writing' },
-  { href: '/faq', label: 'FAQ' },
+  { href: '/about/', label: 'About' },
+  { href: '/experience/', label: 'Experience' },
+  { href: '/work/', label: 'Case studies' },
+  { href: '/writing/', label: 'Writing' },
+  { href: '/faq/', label: 'FAQ' },
 ];
 const isActive = (href: string) =>
   href === '/' ? Astro.url.pathname === '/' : Astro.url.pathname.startsWith(href);
@@ -56,13 +62,16 @@ const isActive = (href: string) =>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <link rel="preload" href={readerFont} as="font" type="font/woff2" crossorigin />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate" type="application/rss+xml" title="Usman Ramzan — Writing" href="/rss.xml" />
     <link rel="sitemap" href="/sitemap-index.xml" />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow'} />
     <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content="Usman Ramzan" />
     <meta property="og:title" content={title} />
@@ -86,111 +95,47 @@ const isActive = (href: string) =>
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageUrl} />
     {structuredData && (
-      <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+      <script type="application/ld+json" set:html={JSON.stringify(structuredData).replaceAll('<', '\\u003c')} />
     )}
   </head>
   <body id="top" class="bg-bg font-sans text-ink antialiased">
-    <header class="border-b border-line">
-      <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
-        <a href="/" class="text-sm font-semibold transition-opacity hover:opacity-70">Usman Ramzan</a>
-        <nav class="hidden items-center gap-8 text-sm md:flex">
-          {
-            nav.map((item) => (
-              <a
-                href={item.href}
-                class:list={[
-                  'transition-colors hover:text-ink',
-                  isActive(item.href) ? 'text-ink' : 'text-muted',
-                ]}
-              >
-                {item.label}
-              </a>
-            ))
-          }
+    <a href="#main-content" class="skip-link">Skip to content</a>
+    <header class="site-header">
+      <div class="site-shell header-inner">
+        <a href="/" class="wordmark">Usman Ramzan<span class="wordmark-note">Fractional CTO · URN Labs</span></a>
+        <nav aria-label="Main navigation" class="desktop-nav">
+          {nav.map((item) => <a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>{item.label}</a>)}
         </nav>
-        <div class="flex items-center gap-4">
-          <details class="relative md:hidden">
-            <summary class="list-none cursor-pointer text-sm text-muted transition-colors hover:text-ink">Menu</summary>
-            <nav class="absolute right-0 top-full z-10 mt-3 min-w-40 border border-line bg-bg px-5 py-3 text-sm shadow-sm">
-              {
-                nav.map((item) => (
-                  <a
-                    href={item.href}
-                    class:list={[
-                      'py-2 block transition-colors hover:text-ink',
-                      isActive(item.href) ? 'text-ink' : 'text-muted',
-                    ]}
-                  >
-                    {item.label}
-                  </a>
-                ))
-              }
-            </nav>
-          </details>
-          <a
-            href="mailto:usman.ramzan0505@gmail.com"
-            class="rounded-full border border-ink px-5 py-2 text-sm transition-colors hover:bg-ink hover:text-white"
-          >
-            Get in touch
-          </a>
-        </div>
+        <a href={consulting.callHref} class="button-primary header-call">{consulting.callLabel}</a>
+        <details class="mobile-nav">
+          <summary>Menu</summary>
+          <nav aria-label="Mobile navigation">
+            {nav.map((item) => <a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>{item.label}</a>)}
+            <a href={consulting.callHref}>{consulting.callLabel}</a>
+          </nav>
+        </details>
       </div>
     </header>
 
-    <main>
+    <main id="main-content" tabindex="-1">
       <slot />
     </main>
 
-    <footer class="border-t border-line">
-      <div class="mx-auto max-w-6xl px-6 py-20">
-        <p class="font-display text-3xl font-medium tracking-tight md:text-5xl">
-          Working on something that cannot go down?
-          <a
-            href="mailto:usman.ramzan0505@gmail.com"
-            class="whitespace-nowrap underline decoration-accent underline-offset-8 transition-colors hover:text-accent"
-          >
-            Write to me.
-          </a>
-        </p>
+    <footer class="site-footer">
+      <div class="site-shell footer-top">
+        <div><p class="footer-title">Bring the technical problem. We’ll work through the next step.</p><p class="footer-description">Fractional CTO, DevOps and AI-agent consulting through URN Labs.</p></div>
+        <a href={consulting.callHref} class="button-primary">{consulting.callLabel}</a>
       </div>
-      <div
-        class="mx-auto grid max-w-6xl grid-cols-2 gap-x-6 gap-y-8 border-t border-line px-6 py-12 text-sm md:grid-cols-4"
-      >
-        <div>
-          <p class="font-medium">Usman Ramzan</p>
-          <p class="mt-1 text-muted">&copy; 2026 Muhammad Usman Ramzan</p>
-        </div>
-        <div class="flex flex-col gap-2 self-start">
-          <a
-            href="https://www.linkedin.com/in/usman-ramzan"
-            class="text-muted transition-colors hover:text-ink"
-          >
-            LinkedIn
-          </a>
-          <a
-            href="https://github.com/usmanramzan"
-            class="text-muted transition-colors hover:text-ink"
-          >
-            GitHub
-          </a>
-        </div>
-        <a
-          href="mailto:usman.ramzan0505@gmail.com"
-          class="self-start break-all text-muted transition-colors hover:text-ink"
-        >
-          usman.ramzan0505@gmail.com
-        </a>
-        <a
-          href="#top"
-          class="self-start text-muted transition-colors hover:text-ink md:text-right"
-        >
-          Back to top
-        </a>
+      <div class="site-shell footer-bottom">
+        <p>&copy; {new Date().getFullYear()} Usman Ramzan · <a href={consulting.brandUrl}>URN Labs</a></p>
+        <nav aria-label="Elsewhere">
+          <a href={`mailto:${consulting.email}`}>{consulting.email}</a>
+          <a href="https://www.linkedin.com/in/usman-ramzan">LinkedIn</a>
+          <a href="https://github.com/usmanramzan">GitHub</a>
+          <a href="/rss.xml">RSS</a>
+          <a href="#top">Back to top ↑</a>
+        </nav>
       </div>
     </footer>
-
-    <!-- TODO: add Cloudflare Web Analytics beacon with a real token once the site is live
-    <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "TODO_CF_BEACON_TOKEN"}'></script>
-    -->
   </body>
 </html>

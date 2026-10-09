@@ -5,7 +5,7 @@ pubDate: 2026-07-14
 draft: false
 ---
 
-At Unifonic I led the migration of roughly forty applications and twenty databases from AWS EKS to Oracle Cloud's OKE. Ten teams owned those services. We finished with zero customer-facing downtime, and the platform ended up fifteen to twenty thousand dollars a month cheaper to run. This post is the shape of that project: why we did it, what we moved first, what broke, and what I would do differently.
+At a messaging platform, I led the migration of roughly forty applications and twenty databases from AWS EKS to Oracle Cloud's OKE. Ten teams owned those services. We finished with zero customer-facing downtime, and the platform ended up fifteen to twenty thousand dollars a month cheaper to run. This post is the shape of that project: why we did it, what we moved first, what broke, and what I would do differently.
 
 ## Why multi-cloud at all
 

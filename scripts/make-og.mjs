@@ -22,20 +22,20 @@ function flag(name) {
   return i >= 0 ? args[i + 1] : undefined;
 }
 
-const title = flag('--title') ?? 'I make cloud infrastructure boring, in the good way.';
+const title = flag('--title') ?? 'Fractional CTO, DevOps and AI-agent engineering.';
 const subtitle =
   flag('--subtitle') ??
-  'CTO at Eprecisio · fractional CTO · seven years of multi-cloud Kubernetes';
+  'For B2B SaaS teams · Consulting through URN Labs';
 const outRel = flag('--out') ?? 'public/og.png';
 const outPath = resolve(root, outRel);
 
 const geist = join(
   root,
-  'node_modules/@fontsource-variable/geist/files/geist-latin-wght-normal.woff2'
+  'node_modules/@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-400-normal.woff2'
 );
 const display = join(
   root,
-  'node_modules/@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-wght-normal.woff2'
+  'node_modules/@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-500-normal.woff2'
 );
 
 function esc(s) {
@@ -52,22 +52,22 @@ const html = `<!doctype html>
 <meta charset="utf-8" />
 <style>
   @font-face {
-    font-family: 'GeistVar';
+    font-family: 'PlexRegular';
     src: url('file://${geist}') format('woff2');
-    font-weight: 100 900;
+    font-weight: 400;
   }
   @font-face {
-    font-family: 'BricolageVar';
+    font-family: 'PlexMedium';
     src: url('file://${display}') format('woff2');
-    font-weight: 100 900;
+    font-weight: 500;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     width: 1200px;
     height: 630px;
     background: #ffffff;
-    color: #111111;
-    font-family: 'GeistVar', system-ui, sans-serif;
+    color: #202922;
+    font-family: 'PlexRegular', system-ui, sans-serif;
     overflow: hidden;
   }
   .frame {
@@ -77,12 +77,12 @@ const html = `<!doctype html>
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background: linear-gradient(180deg, #ffffff 0%, #fafaf9 100%);
+    background: #f7f8f6;
   }
   .accent {
     width: 48px;
     height: 4px;
-    background: #047857;
+    background: #315448;
   }
   .brand {
     margin-top: 28px;
@@ -93,7 +93,7 @@ const html = `<!doctype html>
   .title {
     margin-top: 36px;
     max-width: 980px;
-    font-family: 'BricolageVar', 'GeistVar', sans-serif;
+    font-family: 'PlexMedium', 'PlexRegular', sans-serif;
     font-size: 56px;
     font-weight: 500;
     line-height: 1.05;
@@ -125,7 +125,7 @@ const html = `<!doctype html>
       <p class="sub">${esc(subtitle)}</p>
     </div>
     <div class="foot">
-      <span>CTO · fractional CTO · boring infra</span>
+      <span>Cloud platforms · reliability · technical leadership</span>
       <span class="url">usmanramzan.com</span>
     </div>
   </div>
@@ -139,12 +139,10 @@ const shotPath = join(dir, 'shot.png');
 writeFileSync(htmlPath, html);
 mkdirSync(dirname(outPath), { recursive: true });
 
-const which = spawnSync('which', ['google-chrome', 'google-chrome-stable', 'chromium', 'chromium-browser'], {
-  encoding: 'utf8',
-});
-// which with multiple args isn't valid — find first existing binary
 const candidates = ['google-chrome-stable', 'google-chrome', 'chromium', 'chromium-browser'];
 let chrome = process.env.CHROME_PATH;
+const macChrome = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
+if (!chrome && existsSync(macChrome)) chrome = macChrome;
 for (const bin of candidates) {
   if (chrome) break;
   const r = spawnSync('which', [bin], { encoding: 'utf8' });
@@ -201,12 +199,12 @@ await new Promise((resolvePromise, reject) => {
 if (!existsSync(shotPath)) {
   console.error('Screenshot file missing');
   rmSync(dir, { recursive: true, force: true });
-  rmSync(profileDir, { recursive: true, force: true });
+  rmSync(profileDir, { recursive: true, force: true, maxRetries: 20, retryDelay: 100 });
   process.exit(1);
 }
 
 const png = readFileSync(shotPath);
 writeFileSync(outPath, png);
 rmSync(dir, { recursive: true, force: true });
-rmSync(profileDir, { recursive: true, force: true });
+rmSync(profileDir, { recursive: true, force: true, maxRetries: 20, retryDelay: 100 });
 console.log('Wrote', outRel, `(${png.length} bytes)`);
