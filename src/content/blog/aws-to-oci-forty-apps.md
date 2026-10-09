@@ -1,7 +1,6 @@
 ---
 title: "Migrating forty apps from AWS EKS to OCI OKE without downtime"
 description: "How we moved about forty applications and twenty databases from AWS EKS to OCI OKE across ten teams, and what the migration actually cost in planning."
-updatedDate: 2026-10-09
 pubDate: 2026-07-14
 draft: false
 ---

@@ -10,6 +10,13 @@ export default {
       url.port = '';
       return Response.redirect(url.href, 301);
     }
-    return env.ASSETS.fetch(request);
+    const response = await env.ASSETS.fetch(request);
+    const contentType = response.headers.get('Content-Type');
+    if (contentType?.split(';')[0].trim() === 'text/html' && !/charset=/i.test(contentType)) {
+      const headers = new Headers(response.headers);
+      headers.set('Content-Type', 'text/html; charset=utf-8');
+      return new Response(response.body, { status: response.status, statusText: response.statusText, headers });
+    }
+    return response;
   },
 };

@@ -1,0 +1,84 @@
+---
+import Base from '../../layouts/Base.astro';
+import { consulting } from '../../data/consulting';
+import { caseStudies } from '../../data/case-studies';
+
+export function getStaticPaths() {
+  return caseStudies.map((study) => ({ params: { slug: study.slug }, props: { study } }));
+}
+
+const { study } = Astro.props;
+---
+<Base title={`${study.title} | Usman Ramzan`} description={study.summary}>
+  <section class="case-page">
+    <div class="site-shell">
+      <a class="back-link" href="/work/">← All selected work</a>
+      <header class="case-header">
+        <p class="eyebrow">{study.sector} <span>·</span> Fractional CTO</p>
+        <h1>{study.title}</h1>
+        <p class="case-deck">{study.summary}</p>
+      </header>
+
+      <article class="case-detail">
+        <section aria-labelledby="problem">
+          <p class="section-index">01</p>
+          <div><h2 id="problem">The problem</h2><p>{study.problem}</p></div>
+        </section>
+        <section aria-labelledby="work">
+          <p class="section-index">02</p>
+          <div>
+            <h2 id="work">The work</h2>
+            <ul>{study.work.map((item) => <li>{item}</li>)}</ul>
+          </div>
+        </section>
+        <section aria-labelledby="outcome">
+          <p class="section-index">03</p>
+          <div><h2 id="outcome">Outcome</h2><p>{study.outcome}</p></div>
+        </section>
+        <section class="evidence-note" aria-labelledby="scope">
+          <p class="section-index">04</p>
+          <div><h2 id="scope">What this summary covers</h2><p>{study.limits}</p></div>
+        </section>
+      </article>
+
+      <footer class="case-footer">
+        <p>Working through a related challenge?</p>
+        <a href={consulting.callHref}>{consulting.callLabel} <span aria-hidden="true">↗</span></a>
+      </footer>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .case-page { padding-block: 48px 80px; }
+  .back-link { color: var(--color-accent); font-size: 13px; }
+  .back-link:hover { text-decoration: underline; text-underline-offset: 4px; }
+  .case-header { max-width: 760px; padding: 44px 0 48px; }
+  .eyebrow, .section-index { margin: 0; color: var(--color-muted); font-family: var(--font-mono); font-size: 11px; letter-spacing: .07em; text-transform: uppercase; }
+  .eyebrow span { color: var(--color-accent); }
+  .case-header h1 { margin-top: 16px; font-family: var(--font-display); font-size: clamp(2.5rem, 5.5vw, 4.25rem); font-weight: 500; line-height: 1.02; letter-spacing: -.055em; }
+  .case-deck { max-width: 600px; margin-top: 16px; color: var(--color-muted); font-family: 'Source Serif 4 Variable', Georgia, serif; font-size: 20px; line-height: 1.55; }
+  .case-detail { max-width: 800px; border-top: 1px solid var(--color-line); }
+  .case-detail section { display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 22px; padding: 24px 0; border-bottom: 1px solid var(--color-line); }
+  .section-index { padding-top: 5px; color: var(--color-accent); }
+  .case-detail h2 { font-family: var(--font-display); font-size: 18px; font-weight: 500; letter-spacing: -.02em; }
+  .case-detail p:not(.section-index), .case-detail li { color: #455149; font-family: 'Source Serif 4 Variable', Georgia, serif; font-size: 18px; line-height: 1.7; }
+  .case-detail p:not(.section-index) { margin-top: 8px; }
+  .case-detail ul { margin: 9px 0 0; padding-left: 1.2rem; }
+  .case-detail li + li { margin-top: 7px; }
+  .case-detail li::marker { color: var(--color-accent); }
+  .case-detail .evidence-note { background: #edf1ed; padding-inline: 16px; border: 0; }
+  .case-footer { display: flex; align-items: center; justify-content: space-between; gap: 20px; max-width: 800px; margin-top: 36px; }
+  .case-footer p { font-family: var(--font-display); font-size: 17px; font-weight: 500; }
+  .case-footer a { color: var(--color-accent); font-size: 13px; white-space: nowrap; }
+  .case-footer a:hover { text-decoration: underline; text-underline-offset: 4px; }
+  @media (max-width: 600px) {
+    .case-page { padding-block: 32px 52px; }
+    .case-header { padding: 34px 0 32px; }
+    .case-deck { font-size: 18px; }
+    .case-detail section { grid-template-columns: 30px minmax(0, 1fr); gap: 12px; padding: 20px 0; }
+    .case-detail .evidence-note { padding-inline: 10px; }
+    .case-footer { display: block; }
+    .case-footer a { display: inline-block; margin-top: 10px; }
+  }
+</style>

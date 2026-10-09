@@ -1,7 +1,6 @@
 ---
 title: "What fractional CTO work actually looks like: four companies, four very different problems"
 description: "Four fractional CTO engagements: healthcare SOC 2 readiness, a travel-sector AI assistant, manufacturing GDPR remediation, and media operations on AWS EKS."
-updatedDate: 2026-10-09
 pubDate: 2026-05-20
 draft: false
 ---

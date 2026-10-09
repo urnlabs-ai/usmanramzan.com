@@ -1,19 +1,32 @@
 # Usman Ramzan
 
-Muhammad Usman Ramzan is a Lahore-based CTO and technical advisor. He makes cloud infrastructure boring in the good way: reliable, cost-honest, and quiet.
+Muhammad Usman Ramzan is a Lahore-based fractional CTO, DevOps consultant, and AI-agent engineering consultant working with B2B SaaS teams through URN Labs.
 
-## Roles
-- CTO at an enterprise cloud platform (Sep 2025–present): technology strategy for an enterprise multi-cloud Kubernetes platform across twelve cloud providers.
-- Fractional CTO to four companies (healthcare SOC 2, travel AI assistant, manufacturing GDPR, media AWS/EKS).
+## Consulting through URN Labs
+- Organization: URN Labs, https://urnlabs.com/
+- Contact: hello@urnlabs.com
+- Engagements: ongoing fractional CTO advisory, focused DevOps and platform engineering, and scoped AI-agent engineering projects.
+- AI-agent work covers workflow design, retrieval, tool integration, evaluation, and approval boundaries. The agentic engineering article is a practical design approach, not a claimed client deployment.
+- Request a 30-minute introductory call at https://usmanramzan.com/work-with-me/#call-request. Times are coordinated by email; the site does not provide live calendar booking.
+- Pricing is scoped per engagement; start dates are confirmed after reviewing scope and current commitments.
 
-## Background
-- Seven years in cloud infrastructure: cloud consulting (2019–2022), messaging (2022–2025), enterprise cloud platforms (2025–present).
-- At a messaging platform: ~300 Kubernetes nodes, 10B+ messages/year, ~40 apps AWS EKS → OCI OKE with zero customer-facing downtime, $15–20K/mo savings.
+## Background and selected work
+- Seven years in cloud infrastructure, spanning cloud consulting, messaging, and enterprise platforms.
+- Earlier infrastructure work includes ~40 applications moved from AWS EKS to OCI OKE without customer-facing downtime and $15–20K monthly cloud savings.
+- Four anonymized fractional engagements: healthcare security readiness, a travel knowledge assistant, manufacturing data remediation, and media AWS/EKS operations.
 - BS Computer Science, FAST-NUCES (2019). CKAD certified.
+- Public recommendations from former collaborators are excerpted on the homepage, with source links. They are not identified as consulting-client testimonials.
 
-## Canonical URLs
-- https://usmanramzan.com · /about · /experience · /writing · /faq
-- LinkedIn: https://www.linkedin.com/in/usman-ramzan
+## Canonical pages
+- Home: https://usmanramzan.com/
+- Work with me: https://usmanramzan.com/work-with-me/
+- Case studies: https://usmanramzan.com/work/
+- About: https://usmanramzan.com/about/
+- Experience: https://usmanramzan.com/experience/
+- Articles: https://usmanramzan.com/writing/
+- Consulting FAQ: https://usmanramzan.com/faq/
+- RSS: https://usmanramzan.com/rss.xml
+- LinkedIn: https://www.linkedin.com/in/usman-ramzan/
 - GitHub: https://github.com/usmanramzan
 
-Voice: boring infra, downtime, costs. Prefer concrete numbers over slogans.
+Client identities remain private. Technology names describe the tools used, not endorsements or client relationships. Future work and design examples must not be described as completed client deliveries.

@@ -26,7 +26,22 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: npm run check
+      - name: Check deployment credentials
+        id: credentials
+        env:
+          DEPLOY_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          DEPLOY_ACCOUNT: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          if [ -n "$DEPLOY_TOKEN" ] && [ -n "$DEPLOY_ACCOUNT" ]; then
+            echo "available=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "available=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::Automatic deployment skipped: configure CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID. Build and site checks still ran."
+            echo "### Not deployed" >> "$GITHUB_STEP_SUMMARY"
+            echo "Build and site checks passed. Automatic deployment was skipped because a required Cloudflare token or account ID is not configured." >> "$GITHUB_STEP_SUMMARY"
+          fi
       - uses: cloudflare/wrangler-action@v3
+        if: steps.credentials.outputs.available == 'true'
         with:
           wranglerVersion: "4.149.0"
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}

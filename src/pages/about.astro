@@ -1,6 +1,7 @@
 ---
+import Portrait from '../components/Portrait.astro';
 import Base from '../layouts/Base.astro';
-import { personJsonLd, siteUrl } from '../data/person';
+import { personJsonLd, organizationJsonLd, siteUrl } from '../data/person';
 
 const person = personJsonLd();
 const { '@context': _ctx, ...personEntity } = person;
@@ -8,7 +9,7 @@ const profileJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'ProfilePage',
   name: 'About Usman Ramzan',
-  url: `${siteUrl}/about`,
+  url: `${siteUrl}/about/`,
   mainEntity: {
     ...personEntity,
     '@id': `${siteUrl}/#person`,
@@ -16,10 +17,10 @@ const profileJsonLd = {
 };
 ---
 <Base
-  title="About | Usman Ramzan"
+  title="About Usman Ramzan | Fractional CTO & DevOps Consultant"
   description="Lahore-based CTO and technical advisor. Seven years across cloud consulting, messaging, and enterprise platforms, building cloud platforms where downtime is not an option."
   ogType="profile"
-  jsonLd={profileJsonLd}
+  jsonLd={[profileJsonLd, organizationJsonLd()]}
 >
   <section class="py-24 md:py-32">
     <div class="mx-auto grid max-w-6xl grid-cols-1 gap-12 px-6 md:grid-cols-12">
@@ -61,12 +62,12 @@ const profileJsonLd = {
             <li>CTO at an enterprise cloud platform</li>
             <li>Fractional CTO to four companies</li>
             <li>
-              Building <a href="https://urnlabs.com" class="text-accent underline-offset-4 hover:underline">URN Labs</a>
+              Consulting through <a href="https://urnlabs.com/" class="text-accent underline-offset-4 hover:underline">URN Labs</a>
             </li>
-            <li>Writing here occasionally</li>
+            <li>Writing about infrastructure and technical decisions</li>
           </ul>
           <p class="mt-6 text-sm text-muted">
-            <a href="/faq" class="text-accent underline-offset-4 hover:underline">
+            <a href="/faq/" class="text-accent underline-offset-4 hover:underline">
               FAQ: what a fractional CTO for Kubernetes platforms does &rarr;
             </a>
           </p>
@@ -75,15 +76,7 @@ const profileJsonLd = {
 
       <div class="md:col-span-4">
         <div class="aspect-[3/4] w-full overflow-hidden border border-line bg-[#f4f4f2]">
-          <img
-            src="/usman-portrait.jpg"
-            alt="Usman Ramzan"
-            width="800"
-            height="1000"
-            class="h-full w-full object-cover object-top"
-            loading="eager"
-            decoding="async"
-          />
+          <Portrait widths={[320, 640]} sizes="(max-width: 767px) calc(100vw - 48px), 340px" />
         </div>
         <div class="mt-10 border-t border-line pt-8">
           <h2 class="text-lg font-medium">Where I have been</h2>

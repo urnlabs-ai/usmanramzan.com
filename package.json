@@ -7,8 +7,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "og": "node scripts/make-og.mjs && node scripts/make-og.mjs --title \"Migrating forty apps from AWS EKS to OCI OKE without downtime\" --subtitle \"Zero customer-facing downtime \u00b7 AWS to OCI\" --out public/og/aws-to-oci-forty-apps.png && node scripts/make-og.mjs --title \"What fractional CTO work actually looks like\" --subtitle \"Four companies \u00b7 SOC 2 \u00b7 AI assistant \u00b7 GDPR \u00b7 EKS\" --out public/og/fractional-cto-four-companies.png",
-    "check": "node scripts/check-site.mjs"
+    "og": "node scripts/make-og.mjs && node scripts/make-og.mjs --title \"Migrating forty apps from AWS EKS to OCI OKE without downtime\" --subtitle \"Zero customer-facing downtime \u00b7 AWS to OCI\" --out public/og/aws-to-oci-forty-apps.png && node scripts/make-og.mjs --title \"What fractional CTO work actually looks like\" --subtitle \"Four companies \u00b7 SOC 2 \u00b7 AI assistant \u00b7 GDPR \u00b7 EKS\" --out public/og/fractional-cto-four-companies.png && node scripts/make-og.mjs --title \"Agentic engineering in production starts with boundaries\" --subtitle \"Tool permissions \u00b7 approvals \u00b7 evaluation \u00b7 URN Labs\" --out public/og/agentic-engineering-production-boundaries.png",
+    "check": "node --test tests/worker.test.mjs && node scripts/check-site.mjs"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.0",

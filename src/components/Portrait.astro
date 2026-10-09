@@ -1,0 +1,7 @@
+---
+import { Picture } from 'astro:assets';
+import portrait from '../assets/usman-portrait.jpg';
+interface Props { sizes?: string; widths?: number[]; }
+const { sizes = '(max-width: 640px) 72px, 304px', widths = [144, 304, 608] } = Astro.props;
+---
+<Picture src={portrait} alt="Usman Ramzan" formats={['avif', 'webp']} widths={widths} sizes={sizes} width={608} height={760} loading="eager" decoding="async" quality={75} />

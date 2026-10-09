@@ -1,4 +1,6 @@
 /** Shared Person facts for JSON-LD and llms.txt alignment. */
+import { consulting } from './consulting';
+
 export const siteUrl = 'https://usmanramzan.com';
 
 export const person = {
@@ -6,8 +8,8 @@ export const person = {
   alternateName: 'Usman Ramzan',
   jobTitle: 'Chief Technology Officer',
   description:
-    'CTO and fractional CTO. Seven years running multi-cloud Kubernetes platforms for companies where downtime is not an option.',
-  email: 'mailto:usman.ramzan0505@gmail.com',
+    'Fractional CTO, DevOps and AI-agent consultant working with B2B SaaS teams through URN Labs.',
+  email: `mailto:${consulting.email}`,
   url: siteUrl,
   image: `${siteUrl}/usman-portrait.jpg`,
   sameAs: [
@@ -40,9 +42,12 @@ export function personJsonLd() {
     image: person.image,
     email: person.email,
     sameAs: [...person.sameAs],
+    affiliation: { '@type': 'Organization', '@id': `${consulting.brandUrl}#organization`, name: 'URN Labs', url: consulting.brandUrl },
     alumniOf: person.alumniOf,
     address: person.address,
     knowsAbout: [
+      'DevOps consulting',
+      'AI-agent engineering',
       'Kubernetes',
       'multi-cloud infrastructure',
       'fractional CTO',
@@ -50,5 +55,18 @@ export function personJsonLd() {
       'SOC 2',
       'cost optimization',
     ],
+  };
+}
+
+export function organizationJsonLd() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    '@id': `${consulting.brandUrl}#organization`,
+    name: consulting.brand,
+    url: consulting.brandUrl,
+    description: consulting.description,
+    email: consulting.email,
+    contactPoint: { '@type': 'ContactPoint', email: consulting.email, contactType: 'consulting enquiries' },
   };
 }

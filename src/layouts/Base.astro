@@ -5,7 +5,8 @@ import '@fontsource/ibm-plex-sans/latin-600.css';
 import '@fontsource/ibm-plex-mono/latin-400.css';
 import '../styles/global.css';
 import readerFont from '@fontsource-variable/source-serif-4/files/source-serif-4-latin-wght-normal.woff2?url';
-import { personJsonLd, siteUrl } from '../data/person';
+import { consulting } from '../data/consulting';
+import { personJsonLd, organizationJsonLd, siteUrl } from '../data/person';
 
 interface Props {
   title: string;
@@ -38,7 +39,7 @@ const ogImageUrl = new URL(ogImage, Astro.site).href;
 const twitterTitle = title.includes('Usman Ramzan') ? title : `${title} | Usman Ramzan`;
 
 const graphs: Record<string, unknown>[] = [];
-if (includePerson) graphs.push(personJsonLd());
+if (includePerson) graphs.push(personJsonLd(), organizationJsonLd());
 if (jsonLd) graphs.push(...(Array.isArray(jsonLd) ? jsonLd : [jsonLd]));
 const structuredData =
   graphs.length === 0
@@ -48,10 +49,11 @@ const structuredData =
       : { '@context': 'https://schema.org', '@graph': graphs.map(({ '@context': _c, ...rest }) => rest) };
 
 const nav = [
-  { href: '/about', label: 'About' },
-  { href: '/experience', label: 'Experience' },
-  { href: '/writing', label: 'Writing' },
-  { href: '/faq', label: 'FAQ' },
+  { href: '/about/', label: 'About' },
+  { href: '/experience/', label: 'Experience' },
+  { href: '/work/', label: 'Case studies' },
+  { href: '/writing/', label: 'Writing' },
+  { href: '/faq/', label: 'FAQ' },
 ];
 const isActive = (href: string) =>
   href === '/' ? Astro.url.pathname === '/' : Astro.url.pathname.startsWith(href);
@@ -65,6 +67,7 @@ const isActive = (href: string) =>
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="alternate" type="application/rss+xml" title="Usman Ramzan — Writing" href="/rss.xml" />
     <link rel="sitemap" href="/sitemap-index.xml" />
@@ -99,15 +102,16 @@ const isActive = (href: string) =>
     <a href="#main-content" class="skip-link">Skip to content</a>
     <header class="site-header">
       <div class="site-shell header-inner">
-        <a href="/" class="wordmark">Usman Ramzan<span class="wordmark-note">Engineer &amp; technical advisor</span></a>
+        <a href="/" class="wordmark">Usman Ramzan<span class="wordmark-note">Fractional CTO · URN Labs</span></a>
         <nav aria-label="Main navigation" class="desktop-nav">
           {nav.map((item) => <a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>{item.label}</a>)}
         </nav>
+        <a href={consulting.callHref} class="button-primary header-call">{consulting.callLabel}</a>
         <details class="mobile-nav">
           <summary>Menu</summary>
           <nav aria-label="Mobile navigation">
             {nav.map((item) => <a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>{item.label}</a>)}
-            <a href="mailto:usman.ramzan0505@gmail.com">Get in touch</a>
+            <a href={consulting.callHref}>{consulting.callLabel}</a>
           </nav>
         </details>
       </div>
@@ -119,12 +123,13 @@ const isActive = (href: string) =>
 
     <footer class="site-footer">
       <div class="site-shell footer-top">
-        <div><p class="footer-title">Good infrastructure starts with clear decisions.</p><p class="footer-description">Cloud platforms, reliability, and the trade-offs behind them.</p></div>
-        <a href="mailto:usman.ramzan0505@gmail.com" class="contact-link">Get in touch <span aria-hidden="true">↗</span></a>
+        <div><p class="footer-title">Bring the technical problem. We’ll work through the next step.</p><p class="footer-description">Fractional CTO, DevOps and AI-agent consulting through URN Labs.</p></div>
+        <a href={consulting.callHref} class="button-primary">{consulting.callLabel}</a>
       </div>
       <div class="site-shell footer-bottom">
-        <p>&copy; {new Date().getFullYear()} Usman Ramzan</p>
+        <p>&copy; {new Date().getFullYear()} Usman Ramzan · <a href={consulting.brandUrl}>URN Labs</a></p>
         <nav aria-label="Elsewhere">
+          <a href={`mailto:${consulting.email}`}>{consulting.email}</a>
           <a href="https://www.linkedin.com/in/usman-ramzan">LinkedIn</a>
           <a href="https://github.com/usmanramzan">GitHub</a>
           <a href="/rss.xml">RSS</a>

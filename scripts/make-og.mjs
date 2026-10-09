@@ -22,10 +22,10 @@ function flag(name) {
   return i >= 0 ? args[i + 1] : undefined;
 }
 
-const title = flag('--title') ?? 'Infrastructure that holds up.';
+const title = flag('--title') ?? 'Fractional CTO, DevOps and AI-agent engineering.';
 const subtitle =
   flag('--subtitle') ??
-  'CTO · fractional CTO · seven years of multi-cloud Kubernetes';
+  'For B2B SaaS teams · Consulting through URN Labs';
 const outRel = flag('--out') ?? 'public/og.png';
 const outPath = resolve(root, outRel);
 

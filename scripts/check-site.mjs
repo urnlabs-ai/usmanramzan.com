@@ -41,4 +41,21 @@ for (const [file, { html }] of pages) {
 assert(!readFileSync(join(root, 'sitemap-0.xml'), 'utf8').includes('/404/'), '404 indexed in sitemap');
 assert(readFileSync(join(root, 'rss.xml'), 'utf8').includes('<item>'), 'RSS empty');
 assert(!/eprecisio|unifonic|emumba/i.test(readFileSync(join(root, 'llms.txt'), 'utf8')), 'llms.txt identity leaked');
+const home = readFileSync(join(root, 'index.html'), 'utf8');
+assert(home.includes('B2B SaaS') && home.includes('DevOps') && home.includes('AI-agent'), 'Homepage offer is unclear');
+assert(home.includes('urnlabs.com/#organization'), 'URN Labs organization schema missing');
+assert(home.includes('Book a 30-min call') && home.includes('/work-with-me/#call-request'), 'Homepage call CTA missing');
+assert(home.includes('apple-touch-icon.png'), 'Touch icon missing');
+assert(existsSync(join(root, 'apple-touch-icon.png')), 'Touch icon asset missing');
+assert(home.includes('image/avif') && home.includes('image/webp'), 'Responsive modern portrait formats missing');
+for (const slug of ['aws-to-oci-forty-apps', 'fractional-cto-four-companies']) {
+  const html = readFileSync(join(root, 'writing', slug, 'index.html'), 'utf8');
+  assert(!html.includes('Updated') && !html.includes('2026-10-09'), `${slug}: layout-only date leaked`);
+}
+const engagement = readFileSync(join(root, 'work-with-me/index.html'), 'utf8');
+assert(engagement.includes('hello@urnlabs.com') && !engagement.includes('gmail.com'), 'Branded contact email missing');
+assert(engagement.includes('does not send a message or reserve a calendar slot'), 'Call request behavior must be clear');
+for (const [file, { html }] of pages) {
+  assert(!/href="\/(?:about|experience|writing|faq|work|work-with-me)"/.test(html), `${file}: noncanonical navigation link`);
+}
 console.log(`Passed metadata, schema, identity and ${links} internal link checks across ${pages.size} pages.`);

@@ -1,0 +1,134 @@
+---
+import Base from '../layouts/Base.astro';
+import { consulting, services } from '../data/consulting';
+---
+<Base title="Work with Me | Fractional CTO, DevOps & AI Consulting" description="Work with Usman Ramzan through URN Labs on fractional CTO advisory, DevOps and AI-agent engineering. Request a 30-minute introductory call." includePerson>
+  <section class="consulting-page">
+    <div class="site-shell">
+      <header class="consulting-intro">
+        <p class="brand-note">Usman Ramzan · <a href={consulting.brandUrl}>URN Labs ↗</a></p>
+        <h1>A technical partner for the next stage of your SaaS.</h1>
+        <p class="intro-copy">For B2B SaaS founders and engineering leads who need clearer technical direction, reliable delivery, or a practical path from an AI prototype to production.</p>
+        <a href="#call-request" class="button-primary">{consulting.callLabel} ↗</a>
+      </header>
+
+      <div class="engagement-services">
+        {services.map((service) => <article id={service.id}><h2>{service.name}</h2><p class="service-format">{service.format}</p><p>{service.trigger}</p><p>{service.deliverables}</p></article>)}
+      </div>
+
+      <section class="engagement-process" aria-labelledby="process-heading">
+        <h2 id="process-heading">How working together goes</h2>
+        <ol>
+          <li><h3>Understand the problem</h3><p>A 30-minute introductory call to discuss your product, team, constraints, and what needs to change.</p></li>
+          <li><h3>Agree the scope</h3><p>A proposal sets out deliverables, responsibilities, fees, and a start date. We agree what success looks like before work begins.</p></li>
+          <li><h3>Work in useful increments</h3><p>For a focused project, work toward the agreed deliverables. For an ongoing engagement, maintain clear priorities and review progress with your team.</p></li>
+        </ol>
+      </section>
+
+      <div class="engagement-details">
+        <section><h2>Pricing</h2><p>Fees depend on the scope, delivery responsibility, and engagement length. A focused assessment, an implementation project, and an ongoing fractional CTO engagement are quoted differently.</p><p>Share your problem and budget, if you have one. You’ll receive a scoped proposal before committing.</p></section>
+        <section><h2>Availability</h2><p>A start date is confirmed after reviewing the scope and current commitments. If you have a launch, migration, or review deadline, include it in your enquiry.</p><p>This is consulting and engineering delivery, rather than an emergency on-call service.</p></section>
+      </div>
+
+      <section id="call-request" class="call-request" aria-labelledby="call-heading">
+        <div>
+          <h2 id="call-heading">Start with a 30-minute call</h2>
+          <p>Tell me what you’re working on and where you need help. We’ll coordinate a time by email.</p>
+          <p class="request-note">This form prepares an email draft. It does not send a message or reserve a calendar slot. You review and send the draft in your email app.</p>
+          <p class="contact-alternative">Prefer to write directly? <a href={`mailto:${consulting.email}?subject=Consulting%20enquiry`}>{consulting.email}</a></p>
+          <p class="contact-alternative">Or <a href="https://www.linkedin.com/in/usman-ramzan/">contact me on LinkedIn ↗</a>.</p>
+          <noscript><p>To request a call, email <a href={`mailto:${consulting.email}`}>{consulting.email}</a> with your company, problem, and a few suitable times.</p></noscript>
+        </div>
+        <div>
+          <form hidden id="call-request-form" action={`mailto:${consulting.email}`} method="get" data-recipient={consulting.email}>
+            <div class="form-row">
+              <label>Your name<input name="name" autocomplete="name" required maxlength="100" /></label>
+              <label>Work email<input name="email" type="email" autocomplete="email" required maxlength="254" /></label>
+            </div>
+            <label>Company or product<input name="company" autocomplete="organization" required maxlength="160" /></label>
+            <div class="form-field"><label for="service">Where do you need help?</label><select id="service" name="service" required><option value="">Choose an area</option>{services.map((service) => <option value={service.name}>{service.name}</option>)}<option value="Not sure yet">Not sure yet</option></select></div>
+            <label>What needs to change?<textarea name="problem" rows="4" required maxlength="2000" placeholder="The problem, your current setup, and any deadlines."></textarea></label>
+            <label>Useful times and time zone <span>(optional)</span><input name="times" maxlength="300" placeholder="For example, Tuesday afternoons, UTC+5" /></label>
+            <label>Budget or engagement length <span>(optional)</span><input name="budget" maxlength="300" /></label>
+            <p class="request-note">Please leave out passwords, access tokens, customer data, and other confidential details.</p>
+            <button type="submit" class="button-primary">Prepare call request</button>
+          </form>
+          <div id="draft-result" class="draft-result" hidden>
+            <p id="draft-status" role="status" aria-live="polite"></p>
+            <pre id="draft-preview"></pre>
+            <a id="open-draft" href={`mailto:${consulting.email}`} class="button-primary">Open email draft ↗</a>
+            <p class="request-note">If your email app doesn’t open, copy the text above and email it to {consulting.email}.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </section>
+</Base>
+<script>
+  const form = document.querySelector<HTMLFormElement>('#call-request-form');
+  const result = document.querySelector<HTMLElement>('#draft-result');
+  const status = document.querySelector<HTMLElement>('#draft-status');
+  const preview = document.querySelector<HTMLElement>('#draft-preview');
+  const link = document.querySelector<HTMLAnchorElement>('#open-draft');
+  if (form) form.hidden = false;
+  form?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    if (!form.reportValidity() || !result || !status || !preview || !link) return;
+    const values = new FormData(form);
+    const field = (name: string) => String(values.get(name) ?? '').trim();
+    const body = [
+      'Hi Usman,', '', 'I’d like to arrange a 30-minute introductory call.', '',
+      `Name: ${field('name')}`, `Email: ${field('email')}`, `Company or product: ${field('company')}`,
+      `Area: ${field('service')}`, '', 'What needs to change:', field('problem'), '',
+      `Useful times and time zone: ${field('times') || 'To coordinate by email'}`,
+      `Budget or engagement length: ${field('budget') || 'To discuss'}`, '', 'Thanks,', field('name'),
+    ].join('\n');
+    preview.textContent = body;
+    link.href = `mailto:${form.dataset.recipient}?subject=${encodeURIComponent('30-minute consulting call request')}&body=${encodeURIComponent(body)}`;
+    result.hidden = false;
+    status.textContent = 'Your draft is ready to review. Nothing has been sent.';
+    status.tabIndex = -1;
+    status.focus({ preventScroll: true });
+    result.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'nearest' });
+  });
+</script>
+<style>
+ .consulting-intro { max-width: 780px; }
+ .brand-note { font-size: 13px; color: var(--color-muted); margin-bottom: 24px; }
+ .brand-note a { color: var(--color-accent); text-decoration: underline; text-underline-offset: 3px; }
+ .consulting-intro h1 { font-size: clamp(2.4rem, 4.5vw, 3.8rem); }
+ .intro-copy { font-family: 'Source Serif 4 Variable', Georgia, serif; font-size: 21px; line-height: 1.65; margin-block: 24px; max-width: 640px; }
+ .engagement-services { margin-top: 64px; border-top: 1px solid var(--color-line); }
+ .engagement-services article { padding-block: 28px; max-width: 780px; scroll-margin-top: 28px; }
+ .engagement-services article + article { border-top: 1px solid var(--color-line); }
+ h2 { font-size: 26px; font-weight: 500; letter-spacing: -.025em; }
+ h3 { font-size: 19px; font-weight: 500; }
+ .engagement-services p, .engagement-process p, .engagement-details p { margin-top: 12px; font-size: 16px; line-height: 1.75; color: var(--color-muted); }
+ .service-format { font-size: 12px !important; color: var(--color-accent) !important; }
+ .engagement-process { padding-block: 48px; border-top: 1px solid var(--color-line); }
+ .engagement-process ol { list-style: decimal; padding-left: 24px; margin-top: 28px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; }
+ .engagement-process li::marker { color: var(--color-accent); }
+ .engagement-details { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 64px; padding-block: 32px 56px; }
+ .call-request { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 64px; border-top: 1px solid var(--color-line); padding-top: 48px; scroll-margin-top: 32px; }
+ .call-request p { margin-top: 16px; line-height: 1.7; }
+ .request-note { font-size: 13px; color: var(--color-muted); }
+ .contact-alternative { font-size: 14px; }
+ .contact-alternative a { color: var(--color-accent); text-decoration: underline; text-underline-offset: 4px; overflow-wrap: anywhere; }
+ form { display: flex; flex-direction: column; gap: 20px; }
+ label { display: flex; flex-direction: column; gap: 8px; font-size: 14px; font-weight: 500; }
+ label span { color: var(--color-muted); font-weight: 400; }
+ input, select, textarea { width: 100%; border: 1px solid #b6c1b7; background: #fff; color: var(--color-ink); padding: 11px 12px; border-radius: 4px; font: inherit; font-weight: 400; }
+ input::placeholder, textarea::placeholder { color: #68716b; }
+ textarea { resize: vertical; }
+ .form-field { display: flex; flex-direction: column; gap: 8px; }
+ .form-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+ form button { align-self: start; }
+ .draft-result { margin-top: 28px; border-top: 1px solid var(--color-line); padding-top: 16px; }
+ .draft-result pre { white-space: pre-wrap; overflow-wrap: anywhere; font-family: var(--font-sans); font-size: 14px; line-height: 1.7; margin-block: 20px; }
+ @media (max-width: 767px) {
+  .engagement-process ol, .engagement-details, .call-request { grid-template-columns: 1fr; gap: 28px; }
+  .form-row { grid-template-columns: 1fr; }
+  .intro-copy { font-size: 19px; }
+  .engagement-services { margin-top: 40px; }
+ }
+</style>

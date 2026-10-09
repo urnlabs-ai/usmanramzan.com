@@ -2,30 +2,16 @@
 import Base from '../layouts/Base.astro';
 
 const faqs = [
-  {
-    q: 'What does a fractional CTO for Kubernetes platforms do?',
-    a: 'A fractional CTO for Kubernetes platforms brings senior technical judgement a few days a week: which cluster and cloud problems are actually first, which vendor pitches to ignore, and how to keep multi-cloud platforms reliable without hiring a full-time executive yet. The work is ranked risks with owners and dates, not a vague advisory diary.',
-  },
-  {
-    q: 'How is that different from hiring a DevOps contractor?',
-    a: 'A contractor usually executes a known ticket. A fractional CTO decides what the tickets should be. On Kubernetes platforms that means trade-offs across cost, downtime risk, compliance, and build-versus-buy before anyone opens a pull request.',
-  },
-  {
-    q: 'What does Usman actually do as CTO at an enterprise cloud platform?',
-    a: 'He owns technology strategy for an enterprise multi-cloud Kubernetes platform across twelve cloud providers: what to build versus buy, how tenants get provisioned (cut from 8–10 minutes to about 50 seconds), and how the platform stays reliable as it grows.',
-  },
-  {
-    q: 'What kinds of fractional engagements has he done?',
-    a: 'Four current-style engagements: healthcare SOC 2 readiness (22 pentest findings to a clean position), a travel-sector RAG assistant on Azure OpenAI for ~1,300 users, manufacturing GDPR remediation, and media AWS/EKS operations including GPU nodes.',
-  },
-  {
-    q: 'How long has he been doing this work?',
-    a: 'Seven years of cloud infrastructure, starting at a cloud consultancy in 2019, then three years at a messaging platform on a 10B+ messages/year platform, then CTO at an enterprise cloud platform from September 2025, with fractional CTO work alongside.',
-  },
-  {
-    q: 'When is a fractional CTO the wrong hire?',
-    a: 'If you need someone writing production code every day, hire a staff engineer. If the problem is one deep specialty, hire that specialist. If nobody inside the company will act on recommendations, part-time advice becomes an expensive diary.',
-  },
+  { q: 'Who do you work with?', a: 'B2B SaaS founders and engineering leads who need fractional CTO support, DevOps delivery, or help developing AI assistants and agentic workflows. Engagements are scoped through URN Labs, with me as your technical contact.' },
+  { q: 'How do I hire you?', a: 'Start with a 30-minute introductory call. Share your product, team, problem, and any deadline. If the engagement is a fit, we agree deliverables, responsibilities, fees, and a start date in a scoped proposal.' },
+  { q: 'What does it cost?', a: 'Pricing depends on the scope, delivery responsibility, and engagement length. A focused review, an implementation project, and an ongoing fractional CTO engagement are quoted differently. Fees are agreed before work begins.' },
+  { q: 'When are you available?', a: 'I confirm a start date after reviewing the scope and current commitments. Include any launch, migration, or review deadline in your enquiry. This is consulting and engineering delivery rather than emergency on-call cover.' },
+  { q: 'What does a fractional CTO engagement include?', a: 'Senior technical direction for architecture, roadmap priorities, build-versus-buy decisions, infrastructure risk, and delivery. The goal is a clear set of decisions and work your team can carry through, with an ongoing review cadence where needed.' },
+  { q: 'How is that different from a DevOps project?', a: 'A fractional CTO engagement covers direction and technical ownership. A DevOps project has a more focused delivery scope, such as Kubernetes infrastructure, CI/CD, observability, a cloud migration, or cost controls. We choose the format around the problem.' },
+  { q: 'What does AI-agent engineering cover?', a: 'Choosing where a deterministic workflow is enough, designing retrieval and tool integrations, evaluating failures, and setting boundaries for agent actions. Start with a bounded prototype; consequential actions need explicit permissions and suitable approval gates before production rollout.' },
+  { q: 'What kinds of engagements have you worked on?', a: 'Healthcare security readiness, a retrieval-based knowledge assistant for a travel company, manufacturing data remediation, and AWS/EKS operations for a media company. The case studies describe the work and its limits without disclosing client identities.' },
+  { q: 'Do you guarantee compliance certification or AI accuracy?', a: 'No. Security readiness and data remediation are engineering work, not a promise of certification. For AI systems, evaluation criteria and acceptable failure behavior must be agreed for the particular use case.' },
+  { q: 'When is a fractional CTO the wrong hire?', a: 'If you need someone writing production code every day, hire an engineer for that role. If your problem is one deep specialty, hire that specialist. Fractional leadership works when the team can execute and its founders are ready to act on the decisions.' },
 ];
 
 const faqJsonLd = {
@@ -42,8 +28,8 @@ const faqJsonLd = {
 };
 ---
 <Base
-  title="FAQ | Usman Ramzan"
-  description="What a fractional CTO for Kubernetes platforms does: ranked risks, multi-cloud reliability, SOC 2, and when the hire is wrong."
+  title="Consulting FAQ | Fractional CTO, DevOps & AI Engineering"
+  description="How to hire Usman Ramzan through URN Labs, engagement pricing, availability, and the difference between fractional CTO, DevOps and AI-agent consulting."
   includePerson
   jsonLd={faqJsonLd}
 >
@@ -51,7 +37,7 @@ const faqJsonLd = {
     <div class="mx-auto max-w-5xl px-6">
       <h1 class="font-display text-5xl font-medium tracking-tight md:text-7xl">FAQ</h1>
       <p class="mt-6 max-w-2xl text-lg text-muted">
-        Short answers about fractional CTO work, Kubernetes platforms, and how I spend the week.
+        Practical answers about hiring me, scoping the work, pricing, and availability.
       </p>
 
       <div class="mt-16 divide-y divide-line border-t border-line">
@@ -65,14 +51,8 @@ const faqJsonLd = {
         }
       </div>
 
-      <p class="mt-12 text-sm text-muted">
-        More detail in
-        <a href="/writing/fractional-cto-four-companies/" class="text-accent underline-offset-4 hover:underline">
-          the fractional CTO post
-        </a>
-        and on
-        <a href="/experience" class="text-accent underline-offset-4 hover:underline">experience</a>.
-      </p>
+      <p class="mt-12"><a href="/work-with-me/#call-request" class="button-primary">Book a 30-min call ↗</a></p>
+      <p class="mt-6 text-sm text-muted">Read the <a href="/work/" class="text-accent underline">case studies</a> or <a href="/work-with-me/" class="text-accent underline">how working together goes</a>.</p>
     </div>
   </section>
 </Base>
